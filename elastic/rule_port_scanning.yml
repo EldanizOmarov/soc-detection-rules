@@ -1,0 +1,18 @@
+title: Şəbəkədə Port Tarama Fəaliyyəti
+id: 3e4f5a6b-7c8d-9e0f-1a2b-3c4d5e6f7a8b
+status: stable
+description: Şəbəkədə Port Tarama Fəaliyyəti üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası.
+author: Eldaniz Omarov
+logsource:
+product: network
+service: firewall
+detection:
+selection:
+    action: 'blocked' and count: > 20
+condition: selection
+falsepositives:
+- Qanuni sistem inzibatçısı əməliyyatları
+level: low
+tags:
+- attack.reconnaissance
+- attack.t1046

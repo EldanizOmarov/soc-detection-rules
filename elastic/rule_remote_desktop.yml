@@ -1,0 +1,18 @@
+title: Xarici Şəbəkədən RDP Bağlantısı
+id: 7e8f9a0b-1234-5678-90ab-cdef12345678
+status: stable
+description: Xarici Şəbəkədən RDP Bağlantısı üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası.
+author: Eldaniz Omarov
+logsource:
+product: windows
+service: security
+detection:
+selection:
+    EventID: 4624 and LogonType: 10
+condition: selection
+falsepositives:
+- Qanuni sistem inzibatçısı əməliyyatları
+level: low
+tags:
+- attack.lateral_movement
+- attack.t1021.001

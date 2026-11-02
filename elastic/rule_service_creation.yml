@@ -1,0 +1,18 @@
+title: Şübhəli Windows Xidmətinin Quraşdırılması
+id: 8f9a0b1c-2d3e-4f5a-6b7c-8d9e0f1a2b3c
+status: stable
+description: Şübhəli Windows Xidmətinin Quraşdırılması üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası.
+author: Eldaniz Omarov
+logsource:
+product: windows
+service: security
+detection:
+selection:
+    EventID: 7045
+condition: selection
+falsepositives:
+- Qanuni sistem inzibatçısı əməliyyatları
+level: medium
+tags:
+- attack.persistence
+- attack.t1543.003

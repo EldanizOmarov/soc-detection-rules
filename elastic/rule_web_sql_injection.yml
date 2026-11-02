@@ -1,0 +1,18 @@
+title: HTTP Sorğularında SQL Injections Cəhdi
+id: 0a1b2c3d-4e5f-6a7b-8c9d-0e1f2a3b4c5d
+status: stable
+description: HTTP Sorğularında SQL Injections Cəhdi üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası.
+author: Eldaniz Omarov
+logsource:
+product: web
+service: iis
+detection:
+selection:
+    cs-uri-stem|contains: 'SELECT'
+condition: selection
+falsepositives:
+- Qanuni sistem inzibatçısı əməliyyatları
+level: high
+tags:
+- attack.initial_access
+- attack.t1190

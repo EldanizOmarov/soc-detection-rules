@@ -1,0 +1,18 @@
+title: Yeni Planlı Tapşırıq (Scheduled Task) Yaradılması
+id: 2a3b4c5d-6e7f-8901-2345-6789abcdef01
+status: stable
+description: Yeni Planlı Tapşırıq (Scheduled Task) Yaradılması üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası.
+author: Eldaniz Omarov
+logsource:
+product: windows
+service: security
+detection:
+selection:
+    EventID: 4698
+condition: selection
+falsepositives:
+- Qanuni sistem inzibatçısı əməliyyatları
+level: medium
+tags:
+- attack.persistence
+- attack.t1053.005

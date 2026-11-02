@@ -1,0 +1,19 @@
+title: Mimikatz LSASS Dump Aşkarlanması
+id: 5f9e8a10-21ab-4c3d-9b1e-0123456789ab
+status: test
+description: LSASS prosesinin yaddaşının oxunması və credentials oğurluğu cəhdi.
+author: Eldaniz Omarov
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        TargetImage|endswith: '\lsass.exe'
+        GrantedAccess: '0x1010'
+    condition: selection
+falsepositives:
+    - Səlahiyyətli antivirüs skanları
+level: high
+tags:
+    - attack.credential_access
+    - attack.t1003.001

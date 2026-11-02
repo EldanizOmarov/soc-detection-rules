@@ -1,0 +1,18 @@
+title: Kerberoasting Hücumu (TGS Ticket Request)
+id: w1003
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Kerberoasting Hücumu (TGS Ticket Request)).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4769 and ServiceName: '*$*'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: high
+tags:
+    - attack.credential_access
+    - attack.t1558.003

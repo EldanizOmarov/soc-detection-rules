@@ -1,0 +1,18 @@
+title: Rundll32 ilə Şübhəli DLL İcrası
+id: w1016
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Rundll32 ilə Şübhəli DLL İcrası).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        Image|endswith: 'rundll32.exe' and CommandLine|contains: 'javascript:'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: high
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011

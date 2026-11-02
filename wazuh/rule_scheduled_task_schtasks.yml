@@ -1,0 +1,18 @@
+title: Schtasks Vasitəsilə Tapşırıq Əlavə Edilmə
+id: w1011
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Schtasks Vasitəsilə Tapşırıq Əlavə Edilmə).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        Image|endswith: 'schtasks.exe' and CommandLine|contains: '/create'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1053.005

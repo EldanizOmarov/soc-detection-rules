@@ -1,0 +1,18 @@
+title: Autoruns / Run Key İdarəetməsi
+id: w1010
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Autoruns / Run Key İdarəetməsi).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: registry
+detection:
+    selection:
+        TargetObject|contains: '\CurrentVersion\Run\'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1547.001

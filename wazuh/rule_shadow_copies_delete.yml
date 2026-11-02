@@ -1,0 +1,18 @@
+title: VSSadmin ilə Shadow Copy Silinməsi
+id: w1017
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (VSSadmin ilə Shadow Copy Silinməsi).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        Image|endswith: 'vssadmin.exe' and CommandLine|contains: 'delete shadows'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: critical
+tags:
+    - attack.impact
+    - attack.t1490

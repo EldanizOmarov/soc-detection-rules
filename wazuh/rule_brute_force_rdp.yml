@@ -1,0 +1,18 @@
+title: RDP Uğursuz Giriş Cəhdi
+id: w1001
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (RDP Uğursuz Giriş Cəhdi).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4625 and LogonType: 10
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1110

@@ -1,0 +1,18 @@
+title: Encoded PowerShell Əmrinin İcrası
+id: w1018
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Encoded PowerShell Əmrinin İcrası).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: powershell
+detection:
+    selection:
+        ScriptBlockText|contains: '-EncodedCommand'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: high
+tags:
+    - attack.execution
+    - attack.t1059.001

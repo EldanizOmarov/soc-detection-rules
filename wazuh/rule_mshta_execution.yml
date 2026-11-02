@@ -1,0 +1,18 @@
+title: Mshta Vasitəsilə Skript İcrası
+id: w1015
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Mshta Vasitəsilə Skript İcrası).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        Image|endswith: 'mshta.exe'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: high
+tags:
+    - attack.execution
+    - attack.t1218.005

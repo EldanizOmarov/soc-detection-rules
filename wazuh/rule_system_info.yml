@@ -1,0 +1,18 @@
+title: Sistem Məlumatlarının Yoxlanılması (systeminfo)
+id: w1007
+status: stable
+description: Wazuh üçün avtomatlaşdırılmış real SIGMA aşkarlama qaydası (Sistem Məlumatlarının Yoxlanılması (systeminfo)).
+author: Eldaniz Omarov
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        Image|endswith: 'systeminfo.exe'
+    condition: selection
+falsepositives:
+    - Qanuni sistem inzibatçısı əməliyyatları
+level: low
+tags:
+    - attack.discovery
+    - attack.t1082

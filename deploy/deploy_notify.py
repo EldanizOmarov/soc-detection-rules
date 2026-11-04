@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """6.4 bildirisler. Istifade:
   deploy_notify.py init      - Telegram token/chat_id + GitHub token (gizli sorgu) -> /root/.soc-secrets/notify.env (git-de DEYIL)
-  deploy_notify.py elastic   - Kibana connector-lari (Telegram, Email/MailHog, GitHub Issue) yaradir ve test gonderir
   deploy_notify.py ossec     - Wazuh ossec.conf-a <integration> blokunu elave edir (idempotent)"""
 import getpass, json, os, subprocess, sys, time, urllib.error, urllib.request
 
@@ -76,56 +75,6 @@ def init():
     return 0
 
 
-def elastic():
-    from deploy_elastic import kb
-    env = load_env()
-    if not env.get("TELEGRAM_TOKEN"):
-        print("XETA: once init isletin"); return 1
-    hdr = {"Content-Type": "application/json", "User-Agent": "soc-lab-kibana"}
-    defs = [
-        ("soc-telegram", {"name": "SOC Telegram", "connector_type_id": ".webhook",
-                          "config": {"url": "https://api.telegram.org/bot%s/sendMessage" % env["TELEGRAM_TOKEN"], "method": "post", "hasAuth": False, "headers": hdr},
-                          "secrets": {}}),
-        ("soc-email", {"name": "SOC Email (MailHog)", "connector_type_id": ".email",
-                       "config": {"service": "other", "host": "mailhog", "port": 1025, "secure": False, "hasAuth": False, "from": "soc-elastic@lab.local"},
-                       "secrets": {}}),
-    ]
-    gh_cfg = {"url": "https://api.github.com/repos/%s/issues" % env["GITHUB_REPO"], "method": "post", "hasAuth": False,
-              "headers": dict(hdr, Accept="application/vnd.github+json")}
-    gh_try = [("secretHeaders", {"name": "SOC Ticket (GitHub Issues)", "connector_type_id": ".webhook", "config": gh_cfg,
-                                  "secrets": {"secretHeaders": {"Authorization": "Bearer " + env["GITHUB_TOKEN"]}}}),
-              ("headers (fallback)", {"name": "SOC Ticket (GitHub Issues)", "connector_type_id": ".webhook",
-                                       "config": dict(gh_cfg, headers=dict(gh_cfg["headers"], Authorization="Bearer " + env["GITHUB_TOKEN"])), "secrets": {}})]
-
-    def upsert(cid, body):
-        c, r = kb("POST", "/api/actions/connector/" + cid, body)
-        if c == 409:
-            c, r = kb("PUT", "/api/actions/connector/" + cid, {k: v for k, v in body.items() if k != "connector_type_id"})
-        return c, r
-
-    for cid, body in defs:
-        c, r = upsert(cid, body)
-        print("%s connector %-14s HTTP %s %s" % ("OK  " if c in (200, 201) else "FAIL", cid, c, "" if c in (200, 201) else json.dumps(r)[:200]))
-    for how, body in gh_try:
-        c, r = upsert("soc-ticket", body)
-        print("%s connector %-14s HTTP %s (%s) %s" % ("OK  " if c in (200, 201) else "FAIL", "soc-ticket", c, how, "" if c in (200, 201) else json.dumps(r)[:200]))
-        if c in (200, 201):
-            break
-    print("\n-- Test gonderisleri (Telegram + MailHog + GitHub issue) --")
-    tests = [("soc-telegram", {"body": json.dumps({"chat_id": env["TELEGRAM_CHAT_ID"], "text": "[TEST] Elastic -> Telegram baglantisi isleyir"})}),
-             ("soc-email", {"to": [env["MAIL_TO"]], "subject": "[TEST] Elastic -> Email", "message": "Elastic Kibana connector testi (MailHog)."}),
-             ("soc-ticket", {"body": json.dumps({"title": "[TEST] Elastic -> GitHub Issue", "body": "Kibana connector testi", "labels": ["soc-alert", "test"]})})]
-    for cid, params in tests:
-        c, r = kb("POST", "/api/actions/connector/%s/_execute" % cid, {"params": params})
-        st = r.get("status") if isinstance(r, dict) else "?"
-        print("%s %-14s status=%s %s" % ("OK  " if st == "ok" else "FAIL", cid, st, "" if st == "ok" else json.dumps(r)[:260]))
-    gh = {"Authorization": "Bearer " + env["GITHUB_TOKEN"], "Accept": "application/vnd.github+json"}
-    c, lst = http("GET", "https://api.github.com/repos/%s/issues?state=open&labels=test&per_page=50" % env["GITHUB_REPO"], None, gh)
-    for i in (lst if isinstance(lst, list) else []):
-        http("PATCH", "https://api.github.com/repos/%s/issues/%d" % (env["GITHUB_REPO"], i["number"]), {"state": "closed"}, gh)
-    return 0
-
-
 BLOCK = """
   <!-- SOC 6.4: bildiris + ticket (policy: notify/policy.json) -->
   <integration>
@@ -152,5 +101,5 @@ def ossec():
 
 if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else ""
-    fn = {"init": init, "elastic": elastic, "ossec": ossec}.get(cmd)
+    fn = {"init": init, "ossec": ossec}.get(cmd)
     sys.exit(fn() if fn else print(__doc__) or 1)

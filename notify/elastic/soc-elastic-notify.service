@@ -1,0 +1,13 @@
+[Unit]
+Description=SOC Elastic alert forwarder (Telegram/Email/GitHub Issue)
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /root/soc-detection-rules/notify/elastic/elastic-notify.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

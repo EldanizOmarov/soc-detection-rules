@@ -1,0 +1,20 @@
+title: Registry Run Key Persistence
+id: 3f550c46-4a0d-5d94-80f2-1491adf9d3ad
+status: test
+description: Sysmon 13 RuleName=RunKey (Bölmə 11 qaydası).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.persistence
+- attack.t1547.001
+logsource:
+  product: windows
+  category: registry_set
+detection:
+  selection:
+    RuleName|contains: RunKey
+  condition: selection
+falsepositives:
+- Proqram avtostartı
+level: medium
+x_test: reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v SOCTest /t REG_SZ /d C:\Windows\System32\calc.exe /f

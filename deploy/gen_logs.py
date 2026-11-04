@@ -7,10 +7,11 @@ Istifade:  python3 deploy/gen_logs.py <ssenari> [--host 127.0.0.1]
 Ssenariler:
   net-scan  net-normal  email-phish  email-normal  cloud-attack  cloud-normal
   web-normal web-sqli web-xss web-scanner web-brute
+  linux-auth-fail        (logger ile real /var/log/auth.log-a "Failed password" yazir)
   all-attacks            (butun hucum ssenarileri ardicil)
   steady --eps 50 --seconds 60   (sabit axin, EPS olcmesi ucun; ~80% asagi deyerli ALLOW)
 """
-import argparse, datetime, http.client, json, random, socket, sys, time, urllib.parse
+import argparse, datetime, http.client, json, random, socket, subprocess, sys, time, urllib.parse
 
 ATTACKERS = ["77.88.55.60", "114.114.114.114", "212.58.244.20", "31.13.65.36", "8.8.8.8", "1.1.1.1"]
 INTERNAL = ["10.10.1.5", "10.10.1.20", "10.10.2.15", "172.27.80.1"]
@@ -129,6 +130,14 @@ def web_brute(h):
     print("web-brute: 30 ugursuz /login (401) src=%s" % src)
 
 
+def linux_auth_fail(h):
+    src = random.choice(ATTACKERS)
+    for i in range(8):
+        subprocess.run(["logger", "-p", "authpriv.notice", "-t", "sshd",
+                        "Failed password for invalid user admin from %s port %d ssh2" % (src, 40000 + i)], check=False)
+    print("linux-auth-fail: 8 'Failed password' hadisesi auth.log-a yazildi src=%s" % src)
+
+
 def steady(h, eps, seconds):
     end = time.time() + seconds
     sent = 0
@@ -156,9 +165,9 @@ def main():
     h = a.host
     table = {"net-scan": net_scan, "net-normal": net_normal, "email-phish": email_phish, "email-normal": email_normal,
              "cloud-attack": cloud_attack, "cloud-normal": cloud_normal, "web-normal": web_normal, "web-sqli": web_sqli,
-             "web-xss": web_xss, "web-scanner": web_scanner, "web-brute": web_brute}
+             "web-xss": web_xss, "web-scanner": web_scanner, "web-brute": web_brute, "linux-auth-fail": linux_auth_fail}
     if a.scenario == "all-attacks":
-        for k in ("net-scan", "email-phish", "cloud-attack", "web-sqli", "web-xss", "web-scanner", "web-brute"):
+        for k in ("net-scan", "email-phish", "cloud-attack", "web-sqli", "web-xss", "web-scanner", "web-brute", "linux-auth-fail"):
             table[k](h)
             time.sleep(1)
     elif a.scenario == "steady":

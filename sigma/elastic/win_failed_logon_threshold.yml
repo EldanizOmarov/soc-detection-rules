@@ -1,0 +1,21 @@
+title: Failed Logons Threshold (4625)
+id: e51a4e52-4702-56bc-854e-af5ab3a9998f
+status: test
+description: 5 dəqiqədə eyni hostda 5+ uğursuz giriş (Hunt-H2).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.credential_access
+- attack.t1110
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+  timeframe: 5m
+  condition: selection | count() by Computer >= 5
+falsepositives:
+- Unudulmuş parol
+level: medium
+x_test: net use \\127.0.0.1\IPC$ /user:soclabbad WrongPass123  (6 dəfə)

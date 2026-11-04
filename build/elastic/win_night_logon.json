@@ -1,0 +1,52 @@
+{
+  "rule_id": "90dad1e3-45af-5092-a257-fbe0e8b88e79",
+  "name": "SIGMA - Interactive Logon Outside Working Hours",
+  "description": "Bakı vaxtı 23:00-05:59 arası interaktiv/RDP giriş (Bölmə 11.3, T1078).",
+  "risk_score": 21,
+  "severity": "low",
+  "type": "query",
+  "query": "(((event.code:4624 AND winlog.event_data.LogonType:(2 OR 10)) AND ((soc.hour:<=5) OR (soc.hour:>=23)))) AND winlog.channel:security",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.initial_access",
+    "T1078"
+  ],
+  "false_positives": [
+    "Sahibin gecə işi - hesab sahibi ilə təsdiqlənməlidir"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0001",
+        "name": "Initial Access",
+        "reference": "https://attack.mitre.org/tactics/TA0001/"
+      },
+      "technique": [
+        {
+          "id": "T1078",
+          "name": "Valid Accounts",
+          "reference": "https://attack.mitre.org/techniques/T1078/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_night_logon.yml"
+  ],
+  "license": "MIT"
+}

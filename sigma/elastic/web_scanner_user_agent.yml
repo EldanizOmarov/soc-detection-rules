@@ -1,0 +1,26 @@
+title: Web Vulnerability Scanner User-Agent
+id: 57b88874-9f6e-5bda-846e-5a113145b37c
+status: test
+description: sqlmap/nikto/masscan və s. User-Agent (T1595.002).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.reconnaissance
+- attack.t1595.002
+logsource:
+  product: webserver
+detection:
+  selection:
+    c-useragent|contains:
+    - sqlmap
+    - nikto
+    - masscan
+    - nmap
+    - dirbuster
+    - gobuster
+    - wpscan
+  condition: selection
+falsepositives:
+- Daxili təhlükəsizlik skaneri
+level: medium
+x_test: python3 deploy/gen_logs.py web-scanner

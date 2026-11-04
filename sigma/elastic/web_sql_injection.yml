@@ -1,0 +1,27 @@
+title: Web SQL Injection Attempt
+id: be0ba144-ad32-59fb-a935-e9dec98adc8e
+status: test
+description: URL-də SQL injection əlamətləri (T1190).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.initial_access
+- attack.t1190
+logsource:
+  product: webserver
+detection:
+  selection:
+    c-uri|contains:
+    - union select
+    - union all select
+    - ''' or '
+    - 1=1
+    - drop table
+    - information_schema
+    - sleep(
+    - --
+  condition: selection
+falsepositives:
+- Axtarış sorğusunda '--' simvolu
+level: high
+x_test: python3 deploy/gen_logs.py web-sqli

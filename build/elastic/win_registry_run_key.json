@@ -1,0 +1,59 @@
+{
+  "rule_id": "3f550c46-4a0d-5d94-80f2-1491adf9d3ad",
+  "name": "SIGMA - Registry Run Key Persistence",
+  "description": "Sysmon 13 RuleName=RunKey (Bölmə 11 qaydası).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((winlog.event_data.RuleName:*runkey*)) AND event.code:13 AND winlog.channel:microsoft\\-windows\\-sysmon\\/operational",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.persistence",
+    "T1547.001"
+  ],
+  "false_positives": [
+    "Proqram avtostartı"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0003",
+        "name": "Persistence",
+        "reference": "https://attack.mitre.org/tactics/TA0003/"
+      },
+      "technique": [
+        {
+          "id": "T1547",
+          "name": "Boot or Logon Autostart Execution",
+          "reference": "https://attack.mitre.org/techniques/T1547/",
+          "subtechnique": [
+            {
+              "id": "T1547.001",
+              "name": "Registry Run Keys / Startup Folder",
+              "reference": "https://attack.mitre.org/techniques/T1547/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_registry_run_key.yml"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,58 @@
+{
+  "rule_id": "15790d24-9190-5314-8e03-8dbc1b738031",
+  "name": "SIGMA - Web Login Brute Force (401 burst)",
+  "description": "5 dəqiqədə eyni IP-dən /login ucun 10+ 401 (T1110).",
+  "risk_score": 73,
+  "severity": "high",
+  "type": "threshold",
+  "query": "((url.original:\\/login* AND http.response.status_code:401)) AND soc.source_type:web",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-420s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.credential_access",
+    "T1110"
+  ],
+  "false_positives": [
+    "Unudulmuş parol"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "reference": "https://attack.mitre.org/tactics/TA0006/"
+      },
+      "technique": [
+        {
+          "id": "T1110",
+          "name": "Brute Force",
+          "reference": "https://attack.mitre.org/techniques/T1110/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/web_login_bruteforce.yml"
+  ],
+  "license": "MIT",
+  "threshold": {
+    "field": [
+      "source.ip"
+    ],
+    "value": 10
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "rule_id": "d71ed398-032d-5b03-9a9a-6216f3eb96a8",
+  "name": "SIGMA - Cloud Access Key Created",
+  "description": "Yeni access key yaradılması (T1098.001).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((event.action:createaccesskey)) AND soc.source_type:cloud",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.persistence",
+    "T1098.001"
+  ],
+  "false_positives": [
+    "Planlı açar rotasiyası"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0003",
+        "name": "Persistence",
+        "reference": "https://attack.mitre.org/tactics/TA0003/"
+      },
+      "technique": [
+        {
+          "id": "T1098",
+          "name": "Account Manipulation",
+          "reference": "https://attack.mitre.org/techniques/T1098/",
+          "subtechnique": [
+            {
+              "id": "T1098.001",
+              "name": "Additional Cloud Credentials",
+              "reference": "https://attack.mitre.org/techniques/T1098/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/cloud_access_key_created.yml"
+  ],
+  "license": "MIT"
+}

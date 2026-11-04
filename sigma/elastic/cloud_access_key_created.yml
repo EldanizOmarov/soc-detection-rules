@@ -1,0 +1,19 @@
+title: Cloud Access Key Created
+id: d71ed398-032d-5b03-9a9a-6216f3eb96a8
+status: test
+description: Yeni access key yaradılması (T1098.001).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.persistence
+- attack.t1098.001
+logsource:
+  product: aws
+detection:
+  selection:
+    eventName: CreateAccessKey
+  condition: selection
+falsepositives:
+- Planlı açar rotasiyası
+level: medium
+x_test: python3 deploy/gen_logs.py cloud-attack

@@ -1,0 +1,27 @@
+title: Interactive Logon Outside Working Hours
+id: 90dad1e3-45af-5092-a257-fbe0e8b88e79
+status: test
+description: Bakı vaxtı 23:00-05:59 arası interaktiv/RDP giriş (Bölmə 11.3, T1078).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.initial_access
+- attack.t1078
+logsource:
+  product: windows
+  service: security
+detection:
+  sel_logon:
+    EventID: 4624
+    LogonType:
+    - '2'
+    - '10'
+  sel_hour_early:
+    soc.hour|lte: 5
+  sel_hour_late:
+    soc.hour|gte: 23
+  condition: sel_logon and 1 of sel_hour*
+falsepositives:
+- Sahibin gecə işi - hesab sahibi ilə təsdiqlənməlidir
+level: low
+x_test: '(real giriş: iş stansiyasını 23:00 sonra kilid açmaq)'

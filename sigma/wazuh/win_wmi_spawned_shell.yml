@@ -1,0 +1,25 @@
+title: Shell Spawned by WMI Provider Host
+id: eca01011-cdf5-5afe-9451-e474ac55a3e5
+status: test
+description: WmiPrvSE.exe cmd/powershell/mshta başladır (T1047).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.execution
+- attack.t1047
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    ParentImage|endswith: \wmiprvse.exe
+    Image|endswith:
+    - \cmd.exe
+    - \powershell.exe
+    - \mshta.exe
+  condition: selection
+falsepositives:
+- Uzaq idarəetmə alətləri
+level: high
+x_test: Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='cmd.exe /c echo soc'}
+x_wazuh_id: 100420

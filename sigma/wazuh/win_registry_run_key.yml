@@ -1,0 +1,23 @@
+title: Registry Run Key Persistence
+id: 607668f9-b62c-5cae-9d18-c8366be5f1d7
+status: test
+description: Run/RunOnce açarında dəyər yazılıb (T1547.001).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.persistence
+- attack.t1547.001
+logsource:
+  product: windows
+  category: registry_set
+detection:
+  sel_rule:
+    RuleName|contains: RunKey
+  sel_path:
+    TargetObject|contains: \CurrentVersion\Run
+  condition: 1 of sel*
+falsepositives:
+- Proqramların avtomatik başlama qeydiyyatı
+level: high
+x_test: reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v SOCTest /t REG_SZ /d C:\Windows\System32\calc.exe /f
+x_wazuh_id: 100410

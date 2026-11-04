@@ -1,0 +1,29 @@
+title: PowerShell Encoded Command
+id: f731b340-529f-5ca1-8826-5834b725076e
+status: test
+description: PowerShell base64 (-enc) ile gizlədilmiş komanda icra edir.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.execution
+- attack.t1059.001
+- attack.defense_evasion
+- attack.t1027
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+    - \powershell.exe
+    - \pwsh.exe
+    CommandLine|contains:
+    - ' -enc '
+    - ' -encodedcommand '
+    - ' -ec '
+  condition: selection
+falsepositives:
+- Inzibati skriptlər base64 istifadə edə bilər
+level: high
+x_test: powershell.exe -NoProfile -enc VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAHMAbwBjACcA
+x_wazuh_id: 100300

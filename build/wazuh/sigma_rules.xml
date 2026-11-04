@@ -1,0 +1,251 @@
+<!-- AVTOMATIK YARADILIB: deploy/sigma_convert.py (menbe: sigma/wazuh/*.yml). Əl ilə redaktə etməyin. -->
+<group name="sigma,">
+  <!-- Local Account Discovery (net user/localgroup) [win_account_discovery_net.yml] -->
+  <rule id="100430" level="5">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\net\.exe$|\\net1\.exe$)</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: user| localgroup| accounts)</field>
+    <description>SIGMA: Local Account Discovery (net user/localgroup)</description>
+    <mitre>
+      <id>T1087.001</id>
+    </mitre>
+    <group>sigma,sigma_low,attack.discovery,</group>
+  </rule>
+  <!-- Member Added to Local Administrators (4732) [win_admin_group_member_added.yml] -->
+  <rule id="100380" level="13">
+    <if_sid>60154</if_sid>
+    <field name="win.system.eventID" type="pcre2">(?i)^4732$</field>
+    <description>SIGMA: Member Added to Local Administrators (4732)</description>
+    <mitre>
+      <id>T1098</id>
+    </mitre>
+    <group>sigma,sigma_critical,attack.persistence,</group>
+  </rule>
+  <!-- Bitsadmin Transfer Job [win_bitsadmin_transfer.yml] -->
+  <rule id="100320" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\bitsadmin\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:/transfer|/addfile)</field>
+    <description>SIGMA: Bitsadmin Transfer Job</description>
+    <mitre>
+      <id>T1197</id>
+    </mitre>
+    <group>sigma,sigma_medium,attack.defense_evasion,</group>
+  </rule>
+  <!-- Certutil URL Download [win_certutil_download.yml] -->
+  <rule id="100310" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\certutil\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:-urlcache|-verifyctl|http://|https://)</field>
+    <description>SIGMA: Certutil URL Download</description>
+    <mitre>
+      <id>T1105</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.command_and_control,</group>
+  </rule>
+  <!-- Defender Tampering via Set-MpPreference [win_defender_tamper_cmd.yml] -->
+  <rule id="100450" level="13">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)Set-MpPreference</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:DisableRealtimeMonitoring|DisableBehaviorMonitoring|DisableIOAVProtection|DisableScriptScanning|ExclusionPath)</field>
+    <description>SIGMA: Defender Tampering via Set-MpPreference</description>
+    <mitre>
+      <id>T1562.001</id>
+    </mitre>
+    <group>sigma,sigma_critical,attack.defense_evasion,</group>
+  </rule>
+  <!-- Executable Dropped in User Temp [win_exe_created_in_temp.yml] -->
+  <rule id="100500" level="5">
+    <if_sid>61613</if_sid>
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i)\\AppData\\Local\\Temp\\</field>
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i)(?:\.exe$|\.dll$|\.scr$)</field>
+    <description>SIGMA: Executable Dropped in User Temp</description>
+    <mitre>
+      <id>T1105</id>
+    </mitre>
+    <group>sigma,sigma_low,attack.command_and_control,</group>
+  </rule>
+  <!-- Multiple Failed Logons (4625) - Brute Force [win_failed_logon_burst.yml] -->
+  <rule id="100490" level="11" frequency="5" timeframe="120">
+    <if_matched_sid>60122</if_matched_sid>
+    <same_field>win.eventdata.targetUserName</same_field>
+    <description>SIGMA: Multiple Failed Logons (4625) - Brute Force (5 hadise / 2m)</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.credential_access,</group>
+  </rule>
+  <!-- Windows Firewall Disabled via netsh [win_firewall_disable_cmd.yml] -->
+  <rule id="100460" level="13">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)advfirewall</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)state off</field>
+    <description>SIGMA: Windows Firewall Disabled via netsh</description>
+    <mitre>
+      <id>T1562.004</id>
+    </mitre>
+    <group>sigma,sigma_critical,attack.defense_evasion,</group>
+  </rule>
+  <!-- Credential Dumping Command Keywords [win_mimikatz_keywords.yml] -->
+  <rule id="100470" level="13">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:sekurlsa::|lsadump::|privilege::debug|mimikatz)</field>
+    <description>SIGMA: Credential Dumping Command Keywords</description>
+    <mitre>
+      <id>T1003</id>
+    </mitre>
+    <group>sigma,sigma_critical,attack.credential_access,</group>
+  </rule>
+  <!-- Mshta Script or URL Execution [win_mshta_script.yml] -->
+  <rule id="100330" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\mshta\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:vbscript:|javascript:|http://|https://)</field>
+    <description>SIGMA: Mshta Script or URL Execution</description>
+    <mitre>
+      <id>T1218.005</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.defense_evasion,</group>
+  </rule>
+  <!-- New Local User Created (4720) [win_new_local_user.yml] -->
+  <rule id="100370" level="11">
+    <if_sid>60109</if_sid>
+    <field name="win.system.eventID" type="pcre2">(?i)^4720$</field>
+    <description>SIGMA: New Local User Created (4720)</description>
+    <mitre>
+      <id>T1136.001</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.persistence,</group>
+  </rule>
+  <!-- PowerShell Download Cradle [win_powershell_download_cradle.yml] -->
+  <rule id="100480" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\powershell\.exe$|\\pwsh\.exe$)</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:DownloadString|DownloadFile|Net\.WebClient|Invoke-WebRequest|Invoke-RestMethod)</field>
+    <description>SIGMA: PowerShell Download Cradle</description>
+    <mitre>
+      <id>T1105</id>
+      <id>T1059.001</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.command_and_control,attack.execution,</group>
+  </rule>
+  <!-- PowerShell Encoded Command [win_powershell_encoded_command.yml] -->
+  <rule id="100300" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\powershell\.exe$|\\pwsh\.exe$)</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: -enc | -encodedcommand | -ec )</field>
+    <description>SIGMA: PowerShell Encoded Command</description>
+    <mitre>
+      <id>T1059.001</id>
+      <id>T1027</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.execution,attack.defense_evasion,</group>
+  </rule>
+  <!-- System Owner / Information Discovery [win_recon_whoami_systeminfo.yml] -->
+  <rule id="100440" level="5">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\whoami\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:/priv|/all|/groups)</field>
+    <description>SIGMA: System Owner / Information Discovery</description>
+    <mitre>
+      <id>T1033</id>
+      <id>T1082</id>
+    </mitre>
+    <group>sigma,sigma_low,attack.discovery,</group>
+  </rule>
+  <rule id="100441" level="5">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\systeminfo\.exe$</field>
+    <description>SIGMA: System Owner / Information Discovery</description>
+    <mitre>
+      <id>T1033</id>
+      <id>T1082</id>
+    </mitre>
+    <group>sigma,sigma_low,attack.discovery,</group>
+  </rule>
+  <!-- Registry Run Key Persistence [win_registry_run_key.yml] -->
+  <rule id="100410" level="11">
+    <if_sid>61615</if_sid>
+    <field name="win.eventdata.ruleName" type="pcre2">(?i)RunKey</field>
+    <description>SIGMA: Registry Run Key Persistence</description>
+    <mitre>
+      <id>T1547.001</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.persistence,</group>
+  </rule>
+  <rule id="100411" level="11">
+    <if_sid>61615</if_sid>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)\\CurrentVersion\\Run</field>
+    <description>SIGMA: Registry Run Key Persistence</description>
+    <mitre>
+      <id>T1547.001</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.persistence,</group>
+  </rule>
+  <!-- Regsvr32 Remote Scriptlet (Squiblydoo) [win_regsvr32_scrobj.yml] -->
+  <rule id="100340" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\regsvr32\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:scrobj\.dll|/i:http)</field>
+    <description>SIGMA: Regsvr32 Remote Scriptlet (Squiblydoo)</description>
+    <mitre>
+      <id>T1218.010</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.defense_evasion,</group>
+  </rule>
+  <!-- Scheduled Task Creation (schtasks) [win_schtasks_create.yml] -->
+  <rule id="100390" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\schtasks\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i) /create </field>
+    <description>SIGMA: Scheduled Task Creation (schtasks)</description>
+    <mitre>
+      <id>T1053.005</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.persistence,</group>
+  </rule>
+  <!-- Service Creation (sc.exe) [win_service_create_sc.yml] -->
+  <rule id="100400" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\sc\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i) create </field>
+    <description>SIGMA: Service Creation (sc.exe)</description>
+    <mitre>
+      <id>T1543.003</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.persistence,</group>
+  </rule>
+  <!-- Shadow Copy Deletion (vssadmin) [win_vssadmin_delete_shadows.yml] -->
+  <rule id="100350" level="13">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\vssadmin\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:delete shadows|resize shadowstorage)</field>
+    <description>SIGMA: Shadow Copy Deletion (vssadmin)</description>
+    <mitre>
+      <id>T1490</id>
+    </mitre>
+    <group>sigma,sigma_critical,attack.impact,</group>
+  </rule>
+  <!-- Windows Event Log Clearing (wevtutil) [win_wevtutil_clear_logs.yml] -->
+  <rule id="100360" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\wevtutil\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: cl | clear-log )</field>
+    <description>SIGMA: Windows Event Log Clearing (wevtutil)</description>
+    <mitre>
+      <id>T1070.001</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.defense_evasion,</group>
+  </rule>
+  <!-- Shell Spawned by WMI Provider Host [win_wmi_spawned_shell.yml] -->
+  <rule id="100420" level="11">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)\\wmiprvse\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\cmd\.exe$|\\powershell\.exe$|\\mshta\.exe$)</field>
+    <description>SIGMA: Shell Spawned by WMI Provider Host</description>
+    <mitre>
+      <id>T1047</id>
+    </mitre>
+    <group>sigma,sigma_high,attack.execution,</group>
+  </rule>
+</group>

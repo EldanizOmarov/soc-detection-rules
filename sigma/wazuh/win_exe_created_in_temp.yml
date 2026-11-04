@@ -1,0 +1,25 @@
+title: Executable Dropped in User Temp
+id: 02c9ae5d-048b-5243-98c0-58303a55edd7
+status: test
+description: AppData\Local\Temp-də .exe/.dll/.scr faylı yaradılıb (T1105).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.command_and_control
+- attack.t1105
+logsource:
+  product: windows
+  category: file_event
+detection:
+  selection:
+    TargetFilename|contains: \AppData\Local\Temp\
+    TargetFilename|endswith:
+    - .exe
+    - .dll
+    - .scr
+  condition: selection
+falsepositives:
+- Quraşdırıcılar və yeniləmələr (yüksək FP - tuning ucun nümunə)
+level: low
+x_test: Copy-Item C:\Windows\System32\whoami.exe $env:TEMP\socupdate.exe
+x_wazuh_id: 100500

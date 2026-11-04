@@ -1,0 +1,59 @@
+{
+  "rule_id": "ad6ea57e-6641-5279-9b4f-5ade0426b893",
+  "name": "SIGMA - Email With Dangerous Attachment",
+  "description": "Təhlükəli uzantılı qoşma: exe/js/scr/iso/docm/vbs/lnk (T1566.001). Mail logu simulyasiyadır.",
+  "risk_score": 73,
+  "severity": "high",
+  "type": "query",
+  "query": "((email.attachments.file.extension:(exe OR js OR scr OR iso OR docm OR vbs OR lnk OR jar OR bat))) AND soc.source_type:email",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.initial_access",
+    "T1566.001"
+  ],
+  "false_positives": [
+    "Daxili IT paylaşımı"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0001",
+        "name": "Initial Access",
+        "reference": "https://attack.mitre.org/tactics/TA0001/"
+      },
+      "technique": [
+        {
+          "id": "T1566",
+          "name": "Phishing",
+          "reference": "https://attack.mitre.org/techniques/T1566/",
+          "subtechnique": [
+            {
+              "id": "T1566.001",
+              "name": "Spearphishing Attachment",
+              "reference": "https://attack.mitre.org/techniques/T1566/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/email_dangerous_attachment.yml"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,223 @@
+[
+  {
+    "rule_id": "d71ed398-032d-5b03-9a9a-6216f3eb96a8",
+    "name": "SIGMA - Cloud Access Key Created",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/cloud_access_key_created.yml",
+    "mitre": [
+      "T1098.001"
+    ],
+    "test": "python3 deploy/gen_logs.py cloud-attack"
+  },
+  {
+    "rule_id": "a2ed69b3-f316-5e3e-bcd9-b0925537e5b2",
+    "name": "SIGMA - Cloud Root Console Login Without MFA",
+    "level": "critical",
+    "type": "query",
+    "file": "sigma/elastic/cloud_root_login_no_mfa.yml",
+    "mitre": [
+      "T1078.004"
+    ],
+    "test": "python3 deploy/gen_logs.py cloud-attack"
+  },
+  {
+    "rule_id": "46ec2f69-1871-5bb1-b2e3-59fcc8a9f33a",
+    "name": "SIGMA - CloudTrail Logging Tampering",
+    "level": "critical",
+    "type": "query",
+    "file": "sigma/elastic/cloud_trail_tampering.yml",
+    "mitre": [
+      "T1562.008"
+    ],
+    "test": "python3 deploy/gen_logs.py cloud-attack"
+  },
+  {
+    "rule_id": "ad6ea57e-6641-5279-9b4f-5ade0426b893",
+    "name": "SIGMA - Email With Dangerous Attachment",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/email_dangerous_attachment.yml",
+    "mitre": [
+      "T1566.001"
+    ],
+    "test": "python3 deploy/gen_logs.py email-phish"
+  },
+  {
+    "rule_id": "f158b57c-e6c8-5e3a-9b19-df879d087baa",
+    "name": "SIGMA - Linux Auth - Failed Password Burst",
+    "level": "high",
+    "type": "threshold",
+    "file": "sigma/elastic/linux_ssh_failed_password_burst.yml",
+    "mitre": [
+      "T1110.001"
+    ],
+    "test": "python3 deploy/gen_logs.py linux-auth-fail"
+  },
+  {
+    "rule_id": "585c4090-2374-51a7-8a0f-67200194da02",
+    "name": "SIGMA - Port Scan Detected (Firewall DENY burst)",
+    "level": "medium",
+    "type": "threshold",
+    "file": "sigma/elastic/net_port_scan.yml",
+    "mitre": [
+      "T1046"
+    ],
+    "test": "python3 deploy/gen_logs.py net-scan"
+  },
+  {
+    "rule_id": "15790d24-9190-5314-8e03-8dbc1b738031",
+    "name": "SIGMA - Web Login Brute Force (401 burst)",
+    "level": "high",
+    "type": "threshold",
+    "file": "sigma/elastic/web_login_bruteforce.yml",
+    "mitre": [
+      "T1110"
+    ],
+    "test": "python3 deploy/gen_logs.py web-brute"
+  },
+  {
+    "rule_id": "57b88874-9f6e-5bda-846e-5a113145b37c",
+    "name": "SIGMA - Web Vulnerability Scanner User-Agent",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/web_scanner_user_agent.yml",
+    "mitre": [
+      "T1595.002"
+    ],
+    "test": "python3 deploy/gen_logs.py web-scanner"
+  },
+  {
+    "rule_id": "be0ba144-ad32-59fb-a935-e9dec98adc8e",
+    "name": "SIGMA - Web SQL Injection Attempt",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/web_sql_injection.yml",
+    "mitre": [
+      "T1190"
+    ],
+    "test": "python3 deploy/gen_logs.py web-sqli"
+  },
+  {
+    "rule_id": "d47c9b21-a58c-522e-b803-18af9d64059c",
+    "name": "SIGMA - Web XSS Attempt",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/web_xss_attempt.yml",
+    "mitre": [
+      "T1190"
+    ],
+    "test": "python3 deploy/gen_logs.py web-xss"
+  },
+  {
+    "rule_id": "e1e24489-2fa4-520c-9df6-b5c9f27bf342",
+    "name": "SIGMA - Certutil URL Download",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win_certutil_download.yml",
+    "mitre": [
+      "T1105"
+    ],
+    "test": "certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\\soc.txt"
+  },
+  {
+    "rule_id": "addb4b11-5a57-5718-8e94-263beabe009c",
+    "name": "SIGMA - Suspiciously Long DNS Query (DNS Tunneling)",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/win_dns_tunneling_long_query.yml",
+    "mitre": [
+      "T1071.004"
+    ],
+    "test": "Resolve-DnsName ((\"a\"*40)+\".\"+(\"b\"*40)+\".example.com\")"
+  },
+  {
+    "rule_id": "27a4bd79-2c7c-532c-88df-5f28491c7361",
+    "name": "SIGMA - Event Logs Cleared (1102/104)",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win_event_log_cleared.yml",
+    "mitre": [
+      "T1070.001"
+    ],
+    "test": "Clear-EventLog -LogName Application (yalniz lab ucun, test edilmir)"
+  },
+  {
+    "rule_id": "e51a4e52-4702-56bc-854e-af5ab3a9998f",
+    "name": "SIGMA - Failed Logons Threshold (4625)",
+    "level": "medium",
+    "type": "threshold",
+    "file": "sigma/elastic/win_failed_logon_threshold.yml",
+    "mitre": [
+      "T1110"
+    ],
+    "test": "net use \\\\127.0.0.1\\IPC$ /user:soclabbad WrongPass123  (6 dəfə)"
+  },
+  {
+    "rule_id": "70057b9a-c29e-53eb-af11-36ca571604d0",
+    "name": "SIGMA - LSASS Process Access",
+    "level": "critical",
+    "type": "query",
+    "file": "sigma/elastic/win_lsass_access.yml",
+    "mitre": [
+      "T1003.001"
+    ],
+    "test": "(Sysmon Event 10 data boşluğu - Bölmə 11 H5)"
+  },
+  {
+    "rule_id": "4e51c46f-65de-55e5-a83f-989cde05141b",
+    "name": "SIGMA - New Local User Created (4720)",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/win_new_local_user.yml",
+    "mitre": [
+      "T1136.001"
+    ],
+    "test": "net user soclabtest S0cLab!2026x /add"
+  },
+  {
+    "rule_id": "90dad1e3-45af-5092-a257-fbe0e8b88e79",
+    "name": "SIGMA - Interactive Logon Outside Working Hours",
+    "level": "low",
+    "type": "query",
+    "file": "sigma/elastic/win_night_logon.yml",
+    "mitre": [
+      "T1078"
+    ],
+    "test": "(real giriş: iş stansiyasını 23:00 sonra kilid açmaq)"
+  },
+  {
+    "rule_id": "40a94d96-178e-57d2-9387-46a8addb2f26",
+    "name": "SIGMA - PowerShell Encoded Command",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win_powershell_encoded_command.yml",
+    "mitre": [
+      "T1059.001",
+      "T1027"
+    ],
+    "test": "powershell.exe -NoProfile -enc VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAHMAbwBjACcA"
+  },
+  {
+    "rule_id": "3f550c46-4a0d-5d94-80f2-1491adf9d3ad",
+    "name": "SIGMA - Registry Run Key Persistence",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/win_registry_run_key.yml",
+    "mitre": [
+      "T1547.001"
+    ],
+    "test": "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SOCTest /t REG_SZ /d C:\\Windows\\System32\\calc.exe /f"
+  },
+  {
+    "rule_id": "c2b33394-d686-5eb4-bd4d-14686723d814",
+    "name": "SIGMA - Scheduled Task Creation",
+    "level": "medium",
+    "type": "query",
+    "file": "sigma/elastic/win_schtasks_create.yml",
+    "mitre": [
+      "T1053.005"
+    ],
+    "test": "schtasks /create /tn SOCTest /tr cmd.exe /sc once /st 23:59 /f"
+  }
+]

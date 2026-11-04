@@ -1,0 +1,28 @@
+title: Email With Dangerous Attachment
+id: ad6ea57e-6641-5279-9b4f-5ade0426b893
+status: test
+description: 'Təhlükəli uzantılı qoşma: exe/js/scr/iso/docm/vbs/lnk (T1566.001). Mail logu simulyasiyadır.'
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.initial_access
+- attack.t1566.001
+logsource:
+  product: mail
+detection:
+  selection:
+    attachment_ext:
+    - exe
+    - js
+    - scr
+    - iso
+    - docm
+    - vbs
+    - lnk
+    - jar
+    - bat
+  condition: selection
+falsepositives:
+- Daxili IT paylaşımı
+level: high
+x_test: python3 deploy/gen_logs.py email-phish

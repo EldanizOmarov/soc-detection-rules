@@ -1,0 +1,59 @@
+{
+  "rule_id": "46ec2f69-1871-5bb1-b2e3-59fcc8a9f33a",
+  "name": "SIGMA - CloudTrail Logging Tampering",
+  "description": "StopLogging/DeleteTrail/UpdateTrail (T1562.008).",
+  "risk_score": 99,
+  "severity": "critical",
+  "type": "query",
+  "query": "((event.action:(stoplogging OR deletetrail OR updatetrail OR puteventselectors))) AND soc.source_type:cloud",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.defense_evasion",
+    "T1562.008"
+  ],
+  "false_positives": [
+    "Planlı audit konfiqurasiyası"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0005",
+        "name": "Defense Evasion",
+        "reference": "https://attack.mitre.org/tactics/TA0005/"
+      },
+      "technique": [
+        {
+          "id": "T1562",
+          "name": "Impair Defenses",
+          "reference": "https://attack.mitre.org/techniques/T1562/",
+          "subtechnique": [
+            {
+              "id": "T1562.008",
+              "name": "Disable or Modify Cloud Logs",
+              "reference": "https://attack.mitre.org/techniques/T1562/008/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/cloud_trail_tampering.yml"
+  ],
+  "license": "MIT"
+}

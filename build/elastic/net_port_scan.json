@@ -1,0 +1,58 @@
+{
+  "rule_id": "585c4090-2374-51a7-8a0f-67200194da02",
+  "name": "SIGMA - Port Scan Detected (Firewall DENY burst)",
+  "description": "2 dəqiqədə eyni mənbədən 20+ DENY (T1046). Firewall logu simulyasiyadır.",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "threshold",
+  "query": "((event.action:deny)) AND soc.source_type:network AND _exists_:observer.name",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-240s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.discovery",
+    "T1046"
+  ],
+  "false_positives": [
+    "Daxili zəiflik skaneri"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0007",
+        "name": "Discovery",
+        "reference": "https://attack.mitre.org/tactics/TA0007/"
+      },
+      "technique": [
+        {
+          "id": "T1046",
+          "name": "Network Service Discovery",
+          "reference": "https://attack.mitre.org/techniques/T1046/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/net_port_scan.yml"
+  ],
+  "license": "MIT",
+  "threshold": {
+    "field": [
+      "source.ip"
+    ],
+    "value": 20
+  }
+}

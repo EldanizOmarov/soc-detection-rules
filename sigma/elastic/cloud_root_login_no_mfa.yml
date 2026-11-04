@@ -1,0 +1,21 @@
+title: Cloud Root Console Login Without MFA
+id: a2ed69b3-f316-5e3e-bcd9-b0925537e5b2
+status: test
+description: Root hesabla MFA-sız konsol girişi (T1078.004). CloudTrail formatlı simulyasiya.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.initial_access
+- attack.t1078.004
+logsource:
+  product: aws
+detection:
+  selection:
+    eventName: ConsoleLogin
+    userIdentityType: Root
+    MFAUsed: 'No'
+  condition: selection
+falsepositives:
+- Yoxdur - root giriş qadağan olmalıdır
+level: critical
+x_test: python3 deploy/gen_logs.py cloud-attack

@@ -1,5 +1,7 @@
-#!/bin/bash
-echo "[+] GitHub-dan yeni SIGMA qaydaları oxunur..."
-echo "[+] Wazuh API inteqrasiyası: 20 qayda tərcümə olunub Wazuh Manager-ə yükləndi."
-echo "[+] Elastic API inteqrasiyası: 15 qayda Kibana Detection Engine API ilə synch olundu."
-echo "[SUCCESS] Bütün qaydalar API vasitəsilə uğurla tətbiq edildi!"
+#!/usr/bin/env bash
+# SIGMA (GitHub) -> konvertasiya -> API ile iki SIEM-e tetbiq. UI-da qayda yazilmir.
+set -e
+cd "$(dirname "$0")"
+python3 deploy/sigma_convert.py all
+python3 deploy/deploy_elastic.py
+python3 deploy/deploy_wazuh.py

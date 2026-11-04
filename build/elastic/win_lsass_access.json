@@ -1,0 +1,59 @@
+{
+  "rule_id": "70057b9a-c29e-53eb-af11-36ca571604d0",
+  "name": "SIGMA - LSASS Process Access",
+  "description": "LSASS-a şübhəli giriş hüququ ile müraciət (Hunt-H5; Sysmon Event 10).",
+  "risk_score": 99,
+  "severity": "critical",
+  "type": "query",
+  "query": "(((winlog.event_data.TargetImage:*\\\\lsass.exe AND winlog.event_data.GrantedAccess:(0x1010 OR 0x1410 OR 0x1438 OR 0x143a OR 0x1fffff OR 0x1f3fff OR 0x1f1fff)) AND NOT (winlog.event_data.SourceImage:(*\\\\wininit.exe OR *\\\\csrss.exe OR *\\\\services.exe OR *\\\\svchost.exe OR *\\\\msmpeng.exe OR *\\\\wmiprvse.exe OR *\\\\taskmgr.exe)))) AND event.code:10 AND winlog.channel:microsoft\\-windows\\-sysmon\\/operational",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.credential_access",
+    "T1003.001"
+  ],
+  "false_positives": [
+    "Antivirus/EDR prosesləri"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "reference": "https://attack.mitre.org/tactics/TA0006/"
+      },
+      "technique": [
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "reference": "https://attack.mitre.org/techniques/T1003/",
+          "subtechnique": [
+            {
+              "id": "T1003.001",
+              "name": "LSASS Memory",
+              "reference": "https://attack.mitre.org/techniques/T1003/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_lsass_access.yml"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,20 @@
+title: Port Scan Detected (Firewall DENY burst)
+id: 585c4090-2374-51a7-8a0f-67200194da02
+status: test
+description: 2 dəqiqədə eyni mənbədən 20+ DENY (T1046). Firewall logu simulyasiyadır.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.discovery
+- attack.t1046
+logsource:
+  product: firewall
+detection:
+  selection:
+    action: DENY
+  timeframe: 2m
+  condition: selection | count() by src_ip >= 20
+falsepositives:
+- Daxili zəiflik skaneri
+level: medium
+x_test: python3 deploy/gen_logs.py net-scan

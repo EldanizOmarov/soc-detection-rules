@@ -1,0 +1,28 @@
+title: Defender Tampering via Set-MpPreference
+id: 231fa426-0c13-5dbc-8002-fb650d9f868c
+status: test
+description: Set-MpPreference ile Defender-in söndürülməsi və ya istisna (T1562.001).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  sel_cmd:
+    CommandLine|contains: Set-MpPreference
+  sel_opt:
+    CommandLine|contains:
+    - DisableRealtimeMonitoring
+    - DisableBehaviorMonitoring
+    - DisableIOAVProtection
+    - DisableScriptScanning
+    - ExclusionPath
+  condition: sel_cmd and sel_opt
+falsepositives:
+- Antivirus əvəzləmə zamanı IT
+level: critical
+x_test: cmd.exe /c echo Set-MpPreference -DisableRealtimeMonitoring $true   (yalniz echo - Defender dəyişmir)
+x_wazuh_id: 100450

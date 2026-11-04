@@ -1,0 +1,23 @@
+title: Event Logs Cleared (1102/104)
+id: 27a4bd79-2c7c-532c-88df-5f28491c7361
+status: test
+description: Security 1102 və ya System 104 (Bölmə 11 qaydası).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1070.001
+logsource:
+  product: windows
+detection:
+  sel_sec:
+    EventID: 1102
+    Channel: Security
+  sel_sys:
+    EventID: 104
+    Channel: System
+  condition: 1 of sel*
+falsepositives:
+- Planlı log təmizliyi
+level: high
+x_test: Clear-EventLog -LogName Application (yalniz lab ucun, test edilmir)

@@ -1,0 +1,31 @@
+title: PowerShell Download Cradle
+id: 191facd6-d150-50b3-b0ab-dde9c87b03ea
+status: test
+description: PowerShell ile DownloadString/WebClient/Invoke-WebRequest (T1105, T1059.001).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.command_and_control
+- attack.t1105
+- attack.execution
+- attack.t1059.001
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith:
+    - \powershell.exe
+    - \pwsh.exe
+    CommandLine|contains:
+    - DownloadString
+    - DownloadFile
+    - Net.WebClient
+    - Invoke-WebRequest
+    - Invoke-RestMethod
+  condition: selection
+falsepositives:
+- Admin skriptləri və paket menecerləri
+level: high
+x_test: powershell -NoProfile -Command "echo (New-Object Net.WebClient).DownloadString"   (yükləmə yoxdur)
+x_wazuh_id: 100480

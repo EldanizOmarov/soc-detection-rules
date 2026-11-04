@@ -1,0 +1,22 @@
+title: New Local User Created (4720)
+id: a9558c66-849a-5d1f-8852-5906dbd06729
+status: test
+description: Yeni lokal istifadəçi yaradılıb (davamlılıq T1136.001).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.persistence
+- attack.t1136.001
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4720
+  condition: selection
+falsepositives:
+- Planlı hesab açılması
+level: high
+x_test: net user soclabtest S0cLab!2026x /add
+x_wazuh_id: 100370
+x_wazuh_if_sid: 60109

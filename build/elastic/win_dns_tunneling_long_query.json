@@ -1,0 +1,59 @@
+{
+  "rule_id": "addb4b11-5a57-5718-8e94-263beabe009c",
+  "name": "SIGMA - Suspiciously Long DNS Query (DNS Tunneling)",
+  "description": "DNS sorğu adı 50 simvoldan uzun (T1071.004).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((soc.dns_len:>50)) AND event.code:22 AND winlog.channel:microsoft\\-windows\\-sysmon\\/operational",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.command_and_control",
+    "T1071.004"
+  ],
+  "false_positives": [
+    "CDN və tracking domenləri (uzun subdomenlər)"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0011",
+        "name": "Command and Control",
+        "reference": "https://attack.mitre.org/tactics/TA0011/"
+      },
+      "technique": [
+        {
+          "id": "T1071",
+          "name": "Application Layer Protocol",
+          "reference": "https://attack.mitre.org/techniques/T1071/",
+          "subtechnique": [
+            {
+              "id": "T1071.004",
+              "name": "DNS",
+              "reference": "https://attack.mitre.org/techniques/T1071/004/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_dns_tunneling_long_query.yml"
+  ],
+  "license": "MIT"
+}

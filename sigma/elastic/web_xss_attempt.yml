@@ -1,0 +1,25 @@
+title: Web XSS Attempt
+id: d47c9b21-a58c-522e-b803-18af9d64059c
+status: test
+description: URL-də XSS payload (T1190).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.initial_access
+- attack.t1190
+logsource:
+  product: webserver
+detection:
+  selection:
+    c-uri|contains:
+    - <script
+    - onerror=
+    - onload=
+    - 'javascript:'
+    - <svg
+    - <img
+  condition: selection
+falsepositives:
+- Kod nümunəsi axtaran istifadəçilər
+level: medium
+x_test: python3 deploy/gen_logs.py web-xss

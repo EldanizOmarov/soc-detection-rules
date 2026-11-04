@@ -1,0 +1,37 @@
+title: LSASS Process Access
+id: 70057b9a-c29e-53eb-af11-36ca571604d0
+status: test
+description: LSASS-a şübhəli giriş hüququ ile müraciət (Hunt-H5; Sysmon Event 10).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.credential_access
+- attack.t1003.001
+logsource:
+  product: windows
+  category: process_access
+detection:
+  selection:
+    TargetImage|endswith: \lsass.exe
+    GrantedAccess:
+    - '0x1010'
+    - '0x1410'
+    - '0x1438'
+    - '0x143a'
+    - '0x1fffff'
+    - '0x1f3fff'
+    - '0x1f1fff'
+  filter:
+    SourceImage|endswith:
+    - \wininit.exe
+    - \csrss.exe
+    - \services.exe
+    - \svchost.exe
+    - \msmpeng.exe
+    - \wmiprvse.exe
+    - \taskmgr.exe
+  condition: selection and not filter
+falsepositives:
+- Antivirus/EDR prosesləri
+level: critical
+x_test: (Sysmon Event 10 data boşluğu - Bölmə 11 H5)

@@ -1,0 +1,59 @@
+{
+  "rule_id": "a2ed69b3-f316-5e3e-bcd9-b0925537e5b2",
+  "name": "SIGMA - Cloud Root Console Login Without MFA",
+  "description": "Root hesabla MFA-sız konsol girişi (T1078.004). CloudTrail formatlı simulyasiya.",
+  "risk_score": 99,
+  "severity": "critical",
+  "type": "query",
+  "query": "((event.action:consolelogin AND aws.cloudtrail.user_identity.type:root AND aws.cloudtrail.mfa_used:no)) AND soc.source_type:cloud",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.initial_access",
+    "T1078.004"
+  ],
+  "false_positives": [
+    "Yoxdur - root giriş qadağan olmalıdır"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0001",
+        "name": "Initial Access",
+        "reference": "https://attack.mitre.org/tactics/TA0001/"
+      },
+      "technique": [
+        {
+          "id": "T1078",
+          "name": "Valid Accounts",
+          "reference": "https://attack.mitre.org/techniques/T1078/",
+          "subtechnique": [
+            {
+              "id": "T1078.004",
+              "name": "Cloud Accounts",
+              "reference": "https://attack.mitre.org/techniques/T1078/004/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/cloud_root_login_no_mfa.yml"
+  ],
+  "license": "MIT"
+}

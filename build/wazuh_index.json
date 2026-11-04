@@ -1,0 +1,236 @@
+[
+  {
+    "id": 100430,
+    "level": 5,
+    "title": "Local Account Discovery (net user/localgroup)",
+    "file": "sigma/wazuh/win_account_discovery_net.yml",
+    "mitre": [
+      "T1087.001"
+    ],
+    "test": "net user ; net localgroup administrators"
+  },
+  {
+    "id": 100380,
+    "level": 13,
+    "title": "Member Added to Local Administrators (4732)",
+    "file": "sigma/wazuh/win_admin_group_member_added.yml",
+    "mitre": [
+      "T1098"
+    ],
+    "test": "net localgroup Administrators soclabtest /add"
+  },
+  {
+    "id": 100320,
+    "level": 8,
+    "title": "Bitsadmin Transfer Job",
+    "file": "sigma/wazuh/win_bitsadmin_transfer.yml",
+    "mitre": [
+      "T1197"
+    ],
+    "test": "bitsadmin /transfer soclab /download /priority low http://127.0.0.1:9/x %TEMP%\\x.tmp"
+  },
+  {
+    "id": 100310,
+    "level": 11,
+    "title": "Certutil URL Download",
+    "file": "sigma/wazuh/win_certutil_download.yml",
+    "mitre": [
+      "T1105"
+    ],
+    "test": "certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\\soc.txt"
+  },
+  {
+    "id": 100450,
+    "level": 13,
+    "title": "Defender Tampering via Set-MpPreference",
+    "file": "sigma/wazuh/win_defender_tamper_cmd.yml",
+    "mitre": [
+      "T1562.001"
+    ],
+    "test": "cmd.exe /c echo Set-MpPreference -DisableRealtimeMonitoring $true   (yalniz echo - Defender dəyişmir)"
+  },
+  {
+    "id": 100500,
+    "level": 5,
+    "title": "Executable Dropped in User Temp",
+    "file": "sigma/wazuh/win_exe_created_in_temp.yml",
+    "mitre": [
+      "T1105"
+    ],
+    "test": "Copy-Item C:\\Windows\\System32\\whoami.exe $env:TEMP\\socupdate.exe"
+  },
+  {
+    "id": 100490,
+    "level": 11,
+    "title": "Multiple Failed Logons (4625) - Brute Force",
+    "file": "sigma/wazuh/win_failed_logon_burst.yml",
+    "mitre": [
+      "T1110"
+    ],
+    "test": "net use \\\\127.0.0.1\\IPC$ /user:soclabbad WrongPass123  (6 dəfə)"
+  },
+  {
+    "id": 100460,
+    "level": 13,
+    "title": "Windows Firewall Disabled via netsh",
+    "file": "sigma/wazuh/win_firewall_disable_cmd.yml",
+    "mitre": [
+      "T1562.004"
+    ],
+    "test": "cmd.exe /c echo netsh advfirewall set allprofiles state off   (yalniz echo)"
+  },
+  {
+    "id": 100470,
+    "level": 13,
+    "title": "Credential Dumping Command Keywords",
+    "file": "sigma/wazuh/win_mimikatz_keywords.yml",
+    "mitre": [
+      "T1003"
+    ],
+    "test": "cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)"
+  },
+  {
+    "id": 100330,
+    "level": 11,
+    "title": "Mshta Script or URL Execution",
+    "file": "sigma/wazuh/win_mshta_script.yml",
+    "mitre": [
+      "T1218.005"
+    ],
+    "test": "mshta.exe vbscript:Close(Execute(\"x=1\"))"
+  },
+  {
+    "id": 100370,
+    "level": 11,
+    "title": "New Local User Created (4720)",
+    "file": "sigma/wazuh/win_new_local_user.yml",
+    "mitre": [
+      "T1136.001"
+    ],
+    "test": "net user soclabtest S0cLab!2026x /add"
+  },
+  {
+    "id": 100480,
+    "level": 11,
+    "title": "PowerShell Download Cradle",
+    "file": "sigma/wazuh/win_powershell_download_cradle.yml",
+    "mitre": [
+      "T1105",
+      "T1059.001"
+    ],
+    "test": "powershell -NoProfile -Command \"echo (New-Object Net.WebClient).DownloadString\"   (yükləmə yoxdur)"
+  },
+  {
+    "id": 100300,
+    "level": 11,
+    "title": "PowerShell Encoded Command",
+    "file": "sigma/wazuh/win_powershell_encoded_command.yml",
+    "mitre": [
+      "T1059.001",
+      "T1027"
+    ],
+    "test": "powershell.exe -NoProfile -enc VwByAGkAdABlAC0ATwB1AHQAcAB1AHQAIAAnAHMAbwBjACcA"
+  },
+  {
+    "id": 100440,
+    "level": 5,
+    "title": "System Owner / Information Discovery",
+    "file": "sigma/wazuh/win_recon_whoami_systeminfo.yml",
+    "mitre": [
+      "T1033",
+      "T1082"
+    ],
+    "test": "whoami /priv ; systeminfo"
+  },
+  {
+    "id": 100441,
+    "level": 5,
+    "title": "System Owner / Information Discovery",
+    "file": "sigma/wazuh/win_recon_whoami_systeminfo.yml",
+    "mitre": [
+      "T1033",
+      "T1082"
+    ],
+    "test": "whoami /priv ; systeminfo"
+  },
+  {
+    "id": 100410,
+    "level": 11,
+    "title": "Registry Run Key Persistence",
+    "file": "sigma/wazuh/win_registry_run_key.yml",
+    "mitre": [
+      "T1547.001"
+    ],
+    "test": "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SOCTest /t REG_SZ /d C:\\Windows\\System32\\calc.exe /f"
+  },
+  {
+    "id": 100411,
+    "level": 11,
+    "title": "Registry Run Key Persistence",
+    "file": "sigma/wazuh/win_registry_run_key.yml",
+    "mitre": [
+      "T1547.001"
+    ],
+    "test": "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v SOCTest /t REG_SZ /d C:\\Windows\\System32\\calc.exe /f"
+  },
+  {
+    "id": 100340,
+    "level": 11,
+    "title": "Regsvr32 Remote Scriptlet (Squiblydoo)",
+    "file": "sigma/wazuh/win_regsvr32_scrobj.yml",
+    "mitre": [
+      "T1218.010"
+    ],
+    "test": "regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll"
+  },
+  {
+    "id": 100390,
+    "level": 11,
+    "title": "Scheduled Task Creation (schtasks)",
+    "file": "sigma/wazuh/win_schtasks_create.yml",
+    "mitre": [
+      "T1053.005"
+    ],
+    "test": "schtasks /create /tn SOCTest /tr cmd.exe /sc once /st 23:59 /f"
+  },
+  {
+    "id": 100400,
+    "level": 11,
+    "title": "Service Creation (sc.exe)",
+    "file": "sigma/wazuh/win_service_create_sc.yml",
+    "mitre": [
+      "T1543.003"
+    ],
+    "test": "sc create SOCTestSvc binPath= \"C:\\Windows\\System32\\cmd.exe\""
+  },
+  {
+    "id": 100350,
+    "level": 13,
+    "title": "Shadow Copy Deletion (vssadmin)",
+    "file": "sigma/wazuh/win_vssadmin_delete_shadows.yml",
+    "mitre": [
+      "T1490"
+    ],
+    "test": "vssadmin delete shadows /for=Z: /quiet   (Z: yoxdur - zərərsiz)"
+  },
+  {
+    "id": 100360,
+    "level": 11,
+    "title": "Windows Event Log Clearing (wevtutil)",
+    "file": "sigma/wazuh/win_wevtutil_clear_logs.yml",
+    "mitre": [
+      "T1070.001"
+    ],
+    "test": "wevtutil cl SOCNoSuchLog   (log yoxdur - zərərsiz)"
+  },
+  {
+    "id": 100420,
+    "level": 11,
+    "title": "Shell Spawned by WMI Provider Host",
+    "file": "sigma/wazuh/win_wmi_spawned_shell.yml",
+    "mitre": [
+      "T1047"
+    ],
+    "test": "Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='cmd.exe /c echo soc'}"
+  }
+]

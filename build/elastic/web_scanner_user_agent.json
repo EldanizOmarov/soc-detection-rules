@@ -1,0 +1,59 @@
+{
+  "rule_id": "57b88874-9f6e-5bda-846e-5a113145b37c",
+  "name": "SIGMA - Web Vulnerability Scanner User-Agent",
+  "description": "sqlmap/nikto/masscan və s. User-Agent (T1595.002).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((user_agent.original:(*sqlmap* OR *nikto* OR *masscan* OR *nmap* OR *dirbuster* OR *gobuster* OR *wpscan*))) AND soc.source_type:web",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.reconnaissance",
+    "T1595.002"
+  ],
+  "false_positives": [
+    "Daxili təhlükəsizlik skaneri"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0043",
+        "name": "Reconnaissance",
+        "reference": "https://attack.mitre.org/tactics/TA0043/"
+      },
+      "technique": [
+        {
+          "id": "T1595",
+          "name": "Active Scanning",
+          "reference": "https://attack.mitre.org/techniques/T1595/",
+          "subtechnique": [
+            {
+              "id": "T1595.002",
+              "name": "Vulnerability Scanning",
+              "reference": "https://attack.mitre.org/techniques/T1595/002/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/web_scanner_user_agent.yml"
+  ],
+  "license": "MIT"
+}

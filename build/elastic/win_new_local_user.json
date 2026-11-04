@@ -1,0 +1,59 @@
+{
+  "rule_id": "4e51c46f-65de-55e5-a83f-989cde05141b",
+  "name": "SIGMA - New Local User Created (4720)",
+  "description": "Yeni lokal istifadəçi (Bölmə 11 qaydası).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((event.code:4720)) AND winlog.channel:security",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.persistence",
+    "T1136.001"
+  ],
+  "false_positives": [
+    "Planlı hesab açılması"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0003",
+        "name": "Persistence",
+        "reference": "https://attack.mitre.org/tactics/TA0003/"
+      },
+      "technique": [
+        {
+          "id": "T1136",
+          "name": "Create Account",
+          "reference": "https://attack.mitre.org/techniques/T1136/",
+          "subtechnique": [
+            {
+              "id": "T1136.001",
+              "name": "Local Account",
+              "reference": "https://attack.mitre.org/techniques/T1136/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_new_local_user.yml"
+  ],
+  "license": "MIT"
+}

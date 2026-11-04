@@ -1,0 +1,28 @@
+title: System Owner / Information Discovery
+id: 8b269f58-da96-5f9d-9145-ea791b472484
+status: test
+description: whoami /priv|/all|/groups və systeminfo ilə kəşfiyyat (T1033, T1082).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.discovery
+- attack.t1033
+- attack.t1082
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  sel_whoami:
+    Image|endswith: \whoami.exe
+    CommandLine|contains:
+    - /priv
+    - /all
+    - /groups
+  sel_sysinfo:
+    Image|endswith: \systeminfo.exe
+  condition: 1 of sel*
+falsepositives:
+- Dəstək komandası
+level: low
+x_test: whoami /priv ; systeminfo
+x_wazuh_id: 100440

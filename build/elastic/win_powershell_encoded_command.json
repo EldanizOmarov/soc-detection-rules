@@ -1,0 +1,76 @@
+{
+  "rule_id": "40a94d96-178e-57d2-9387-46a8addb2f26",
+  "name": "SIGMA - PowerShell Encoded Command",
+  "description": "PowerShell -enc ile gizlədilmiş komanda (Hunt-H1).",
+  "risk_score": 73,
+  "severity": "high",
+  "type": "query",
+  "query": "((winlog.event_data.Image:(*\\\\powershell.exe OR *\\\\pwsh.exe) AND winlog.event_data.CommandLine:(*\\ \\-enc\\ * OR *\\ \\-encodedcommand\\ *))) AND event.code:1 AND winlog.channel:microsoft\\-windows\\-sysmon\\/operational",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.execution",
+    "attack.defense_evasion",
+    "T1059.001",
+    "T1027"
+  ],
+  "false_positives": [
+    "Inzibati skriptlər"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0002",
+        "name": "Execution",
+        "reference": "https://attack.mitre.org/tactics/TA0002/"
+      },
+      "technique": [
+        {
+          "id": "T1059",
+          "name": "Command and Scripting Interpreter",
+          "reference": "https://attack.mitre.org/techniques/T1059/",
+          "subtechnique": [
+            {
+              "id": "T1059.001",
+              "name": "PowerShell",
+              "reference": "https://attack.mitre.org/techniques/T1059/001/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0005",
+        "name": "Defense Evasion",
+        "reference": "https://attack.mitre.org/tactics/TA0005/"
+      },
+      "technique": [
+        {
+          "id": "T1027",
+          "name": "Obfuscated Files or Information",
+          "reference": "https://attack.mitre.org/techniques/T1027/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_powershell_encoded_command.yml"
+  ],
+  "license": "MIT"
+}

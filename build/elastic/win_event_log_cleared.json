@@ -1,0 +1,59 @@
+{
+  "rule_id": "27a4bd79-2c7c-532c-88df-5f28491c7361",
+  "name": "SIGMA - Event Logs Cleared (1102/104)",
+  "description": "Security 1102 və ya System 104 (Bölmə 11 qaydası).",
+  "risk_score": 73,
+  "severity": "high",
+  "type": "query",
+  "query": "((event.code:1102 AND winlog.channel:security) OR (event.code:104 AND winlog.channel:system))",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.defense_evasion",
+    "T1070.001"
+  ],
+  "false_positives": [
+    "Planlı log təmizliyi"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0005",
+        "name": "Defense Evasion",
+        "reference": "https://attack.mitre.org/tactics/TA0005/"
+      },
+      "technique": [
+        {
+          "id": "T1070",
+          "name": "Indicator Removal",
+          "reference": "https://attack.mitre.org/techniques/T1070/",
+          "subtechnique": [
+            {
+              "id": "T1070.001",
+              "name": "Clear Windows Event Logs",
+              "reference": "https://attack.mitre.org/techniques/T1070/001/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_event_log_cleared.yml"
+  ],
+  "license": "MIT"
+}

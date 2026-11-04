@@ -1,0 +1,59 @@
+{
+  "rule_id": "c2b33394-d686-5eb4-bd4d-14686723d814",
+  "name": "SIGMA - Scheduled Task Creation",
+  "description": "schtasks /create (Hunt-H3).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "query",
+  "query": "((winlog.event_data.Image:*\\\\schtasks.exe AND winlog.event_data.CommandLine:*\\ \\/create\\ *)) AND event.code:1 AND winlog.channel:microsoft\\-windows\\-sysmon\\/operational",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.persistence",
+    "T1053.005"
+  ],
+  "false_positives": [
+    "Proqram yeniləmələri"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0003",
+        "name": "Persistence",
+        "reference": "https://attack.mitre.org/tactics/TA0003/"
+      },
+      "technique": [
+        {
+          "id": "T1053",
+          "name": "Scheduled Task/Job",
+          "reference": "https://attack.mitre.org/techniques/T1053/",
+          "subtechnique": [
+            {
+              "id": "T1053.005",
+              "name": "Scheduled Task",
+              "reference": "https://attack.mitre.org/techniques/T1053/005/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_schtasks_create.yml"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,23 @@
+title: Windows Firewall Disabled via netsh
+id: e1884d0a-a94e-5fdc-98e4-b9d08701be8f
+status: test
+description: netsh advfirewall ... state off (T1562.004).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1562.004
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  sel_fw:
+    CommandLine|contains: advfirewall
+  sel_off:
+    CommandLine|contains: state off
+  condition: sel_fw and sel_off
+falsepositives:
+- Şəbəkə problemlərinin diaqnostikası
+level: critical
+x_test: cmd.exe /c echo netsh advfirewall set allprofiles state off   (yalniz echo)
+x_wazuh_id: 100460

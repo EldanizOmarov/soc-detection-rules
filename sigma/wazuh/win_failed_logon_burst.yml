@@ -1,0 +1,23 @@
+title: Multiple Failed Logons (4625) - Brute Force
+id: 50f4c9c1-8eb2-5b19-9a06-e0f59ec4c705
+status: test
+description: 2 dəqiqədə eyni hesab ucun 5+ uğursuz giriş (T1110).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.credential_access
+- attack.t1110
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4625
+  timeframe: 2m
+  condition: selection | count() by TargetUserName >= 5
+falsepositives:
+- Unudulmuş parol
+level: high
+x_test: net use \\127.0.0.1\IPC$ /user:soclabbad WrongPass123  (6 dəfə)
+x_wazuh_id: 100490
+x_wazuh_base_sid: 60122

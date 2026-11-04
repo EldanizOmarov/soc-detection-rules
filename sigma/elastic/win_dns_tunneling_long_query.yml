@@ -1,0 +1,20 @@
+title: Suspiciously Long DNS Query (DNS Tunneling)
+id: addb4b11-5a57-5718-8e94-263beabe009c
+status: test
+description: DNS sorğu adı 50 simvoldan uzun (T1071.004).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.command_and_control
+- attack.t1071.004
+logsource:
+  product: windows
+  category: dns_query
+detection:
+  selection:
+    soc.dns_len|gt: 50
+  condition: selection
+falsepositives:
+- CDN və tracking domenləri (uzun subdomenlər)
+level: medium
+x_test: Resolve-DnsName (("a"*40)+"."+("b"*40)+".example.com")

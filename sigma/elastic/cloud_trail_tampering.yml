@@ -1,0 +1,23 @@
+title: CloudTrail Logging Tampering
+id: 46ec2f69-1871-5bb1-b2e3-59fcc8a9f33a
+status: test
+description: StopLogging/DeleteTrail/UpdateTrail (T1562.008).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1562.008
+logsource:
+  product: aws
+detection:
+  selection:
+    eventName:
+    - StopLogging
+    - DeleteTrail
+    - UpdateTrail
+    - PutEventSelectors
+  condition: selection
+falsepositives:
+- Planlı audit konfiqurasiyası
+level: critical
+x_test: python3 deploy/gen_logs.py cloud-attack

@@ -1,0 +1,58 @@
+{
+  "rule_id": "e51a4e52-4702-56bc-854e-af5ab3a9998f",
+  "name": "SIGMA - Failed Logons Threshold (4625)",
+  "description": "5 dəqiqədə eyni hostda 5+ uğursuz giriş (Hunt-H2).",
+  "risk_score": 47,
+  "severity": "medium",
+  "type": "threshold",
+  "query": "((event.code:4625)) AND winlog.channel:security",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-420s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.credential_access",
+    "T1110"
+  ],
+  "false_positives": [
+    "Unudulmuş parol"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "reference": "https://attack.mitre.org/tactics/TA0006/"
+      },
+      "technique": [
+        {
+          "id": "T1110",
+          "name": "Brute Force",
+          "reference": "https://attack.mitre.org/techniques/T1110/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win_failed_logon_threshold.yml"
+  ],
+  "license": "MIT",
+  "threshold": {
+    "field": [
+      "host.name"
+    ],
+    "value": 5
+  }
+}

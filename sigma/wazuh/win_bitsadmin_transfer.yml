@@ -1,0 +1,24 @@
+title: Bitsadmin Transfer Job
+id: 8d73f27e-a9bf-5c61-a4e6-642811a978a9
+status: test
+description: bitsadmin /transfer ile fayl yukləmə və ya davamlılıq (BITS Jobs).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1197
+logsource:
+  product: windows
+  category: process_creation
+detection:
+  selection:
+    Image|endswith: \bitsadmin.exe
+    CommandLine|contains:
+    - /transfer
+    - /addfile
+  condition: selection
+falsepositives:
+- Bəzi quraşdırıcılar BITS istifadə edir
+level: medium
+x_test: bitsadmin /transfer soclab /download /priority low http://127.0.0.1:9/x %TEMP%\x.tmp
+x_wazuh_id: 100320

@@ -1,0 +1,22 @@
+title: Member Added to Local Administrators (4732)
+id: 80a303b2-f512-5b59-894e-6fd99e14f3f4
+status: test
+description: Lokal Administrators qrupuna üzv əlavə edilib (T1098).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.persistence
+- attack.t1098
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4732
+  condition: selection
+falsepositives:
+- Planlı inzibati dəyişiklik
+level: critical
+x_test: net localgroup Administrators soclabtest /add
+x_wazuh_id: 100380
+x_wazuh_if_sid: 60154

@@ -23,3 +23,4 @@ falsepositives:
 level: low
 x_test: Copy-Item C:\Windows\System32\whoami.exe $env:TEMP\socupdate.exe
 x_wazuh_id: 100500
+x_wazuh_if_sid: 61613,92213

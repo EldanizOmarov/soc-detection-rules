@@ -23,3 +23,4 @@ falsepositives:
 level: high
 x_test: Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine='cmd.exe /c echo soc'}
 x_wazuh_id: 100420
+x_wazuh_if_sid: 61603,92069,92052

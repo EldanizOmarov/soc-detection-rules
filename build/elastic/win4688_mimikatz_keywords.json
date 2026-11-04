@@ -1,0 +1,52 @@
+{
+  "rule_id": "6d68ad67-cd34-500d-bc75-4b01621f1ae5",
+  "name": "SIGMA - Credential Dumping Command Keywords (Security 4688)",
+  "description": "mimikatz/sekurlsa/lsadump acar sozleri (T1003); Security 4688.",
+  "risk_score": 99,
+  "severity": "critical",
+  "type": "query",
+  "query": "((winlog.event_data.CommandLine:(*sekurlsa\\:\\:* OR *lsadump\\:\\:* OR *privilege\\:\\:debug* OR *mimikatz*) AND event.code:4688)) AND winlog.channel:security",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.credential_access",
+    "T1003"
+  ],
+  "false_positives": [
+    "Təhlükəsizlik komandasının testləri"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0006",
+        "name": "Credential Access",
+        "reference": "https://attack.mitre.org/tactics/TA0006/"
+      },
+      "technique": [
+        {
+          "id": "T1003",
+          "name": "OS Credential Dumping",
+          "reference": "https://attack.mitre.org/techniques/T1003/"
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win4688_mimikatz_keywords.yml"
+  ],
+  "license": "MIT"
+}

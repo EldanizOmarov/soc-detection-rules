@@ -1,0 +1,59 @@
+{
+  "rule_id": "7c2dafeb-8f8d-5095-a321-4bc2a2833c28",
+  "name": "SIGMA - Regsvr32 Remote Scriptlet (Security 4688)",
+  "description": "regsvr32 scrobj.dll /i:http (T1218.010); Security 4688.",
+  "risk_score": 73,
+  "severity": "high",
+  "type": "query",
+  "query": "((winlog.event_data.NewProcessName:*\\\\regsvr32.exe AND winlog.event_data.CommandLine:(*scrobj.dll* OR *\\/i\\:http*) AND event.code:4688)) AND winlog.channel:security",
+  "language": "lucene",
+  "index": [
+    "soc-*"
+  ],
+  "interval": "1m",
+  "from": "now-360s",
+  "to": "now",
+  "enabled": true,
+  "max_signals": 100,
+  "author": [
+    "Eldaniz Omarov"
+  ],
+  "tags": [
+    "SOC",
+    "SIGMA",
+    "Elastic",
+    "attack.defense_evasion",
+    "T1218.010"
+  ],
+  "false_positives": [
+    "Nadir"
+  ],
+  "threat": [
+    {
+      "framework": "MITRE ATT&CK",
+      "tactic": {
+        "id": "TA0005",
+        "name": "Defense Evasion",
+        "reference": "https://attack.mitre.org/tactics/TA0005/"
+      },
+      "technique": [
+        {
+          "id": "T1218",
+          "name": "System Binary Proxy Execution",
+          "reference": "https://attack.mitre.org/techniques/T1218/",
+          "subtechnique": [
+            {
+              "id": "T1218.010",
+              "name": "Regsvr32",
+              "reference": "https://attack.mitre.org/techniques/T1218/010/"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "references": [
+    "https://github.com/EldanizOmarov/soc-detection-rules/blob/main/sigma/elastic/win4688_regsvr32_scrobj.yml"
+  ],
+  "license": "MIT"
+}

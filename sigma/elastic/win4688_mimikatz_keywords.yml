@@ -1,0 +1,25 @@
+title: Credential Dumping Command Keywords (Security 4688)
+id: 6d68ad67-cd34-500d-bc75-4b01621f1ae5
+status: test
+description: mimikatz/sekurlsa/lsadump acar sozleri (T1003); Security 4688.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.credential_access
+- attack.t1003
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    CommandLine|contains:
+    - 'sekurlsa::'
+    - 'lsadump::'
+    - privilege::debug
+    - mimikatz
+    EventID: 4688
+  condition: selection
+falsepositives:
+- Təhlükəsizlik komandasının testləri
+level: critical
+x_test: cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)

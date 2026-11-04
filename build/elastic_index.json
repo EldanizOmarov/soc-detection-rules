@@ -110,6 +110,50 @@
     "test": "python3 deploy/gen_logs.py web-xss"
   },
   {
+    "rule_id": "c72fda86-f06d-52a8-8b99-c2689d0c1b6d",
+    "name": "SIGMA - Certutil URL Download (Security 4688)",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win4688_certutil_download.yml",
+    "mitre": [
+      "T1105"
+    ],
+    "test": "certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\\soc.txt"
+  },
+  {
+    "rule_id": "6d68ad67-cd34-500d-bc75-4b01621f1ae5",
+    "name": "SIGMA - Credential Dumping Command Keywords (Security 4688)",
+    "level": "critical",
+    "type": "query",
+    "file": "sigma/elastic/win4688_mimikatz_keywords.yml",
+    "mitre": [
+      "T1003"
+    ],
+    "test": "cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)"
+  },
+  {
+    "rule_id": "c4cad9a3-2efa-531b-908f-e6d4d74f56dd",
+    "name": "SIGMA - Mshta Script or URL Execution (Security 4688)",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win4688_mshta_script.yml",
+    "mitre": [
+      "T1218.005"
+    ],
+    "test": "mshta.exe vbscript:Close(Execute(\"x=1\"))"
+  },
+  {
+    "rule_id": "7c2dafeb-8f8d-5095-a321-4bc2a2833c28",
+    "name": "SIGMA - Regsvr32 Remote Scriptlet (Security 4688)",
+    "level": "high",
+    "type": "query",
+    "file": "sigma/elastic/win4688_regsvr32_scrobj.yml",
+    "mitre": [
+      "T1218.010"
+    ],
+    "test": "regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll"
+  },
+  {
     "rule_id": "e1e24489-2fa4-520c-9df6-b5c9f27bf342",
     "name": "SIGMA - Certutil URL Download",
     "level": "high",

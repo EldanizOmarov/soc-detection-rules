@@ -1,0 +1,27 @@
+title: Certutil URL Download (Security 4688)
+id: a5c195e1-7b5d-54e4-8302-def52f1b71bb
+status: test
+description: certutil ile URL-den yukleme; Security 4688 komanda setri (Sysmon bu prosesi yazmir).
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.command_and_control
+- attack.t1105
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    NewProcessName|endswith: \certutil.exe
+    CommandLine|contains:
+    - -urlcache
+    - -verifyctl
+    - http://
+    - https://
+  condition: selection
+falsepositives:
+- Sertifikat yenilənmələri
+level: high
+x_test: certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\soc.txt
+x_wazuh_id: 100510
+x_wazuh_if_sid: 67027

@@ -21,3 +21,4 @@ falsepositives:
 level: high
 x_test: reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Run /v SOCTest /t REG_SZ /d C:\Windows\System32\calc.exe /f
 x_wazuh_id: 100410
+x_wazuh_if_sid: 61615,92302

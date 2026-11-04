@@ -1,5 +1,45 @@
 [
   {
+    "id": 100510,
+    "level": 11,
+    "title": "Certutil URL Download (Security 4688)",
+    "file": "sigma/wazuh/win4688_certutil_download.yml",
+    "mitre": [
+      "T1105"
+    ],
+    "test": "certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\\soc.txt"
+  },
+  {
+    "id": 100540,
+    "level": 13,
+    "title": "Credential Dumping Command Keywords (Security 4688)",
+    "file": "sigma/wazuh/win4688_mimikatz_keywords.yml",
+    "mitre": [
+      "T1003"
+    ],
+    "test": "cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)"
+  },
+  {
+    "id": 100520,
+    "level": 11,
+    "title": "Mshta Script or URL Execution (Security 4688)",
+    "file": "sigma/wazuh/win4688_mshta_script.yml",
+    "mitre": [
+      "T1218.005"
+    ],
+    "test": "mshta.exe vbscript:Close(Execute(\"x=1\"))"
+  },
+  {
+    "id": 100530,
+    "level": 11,
+    "title": "Regsvr32 Remote Scriptlet (Security 4688)",
+    "file": "sigma/wazuh/win4688_regsvr32_scrobj.yml",
+    "mitre": [
+      "T1218.010"
+    ],
+    "test": "regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll"
+  },
+  {
     "id": 100430,
     "level": 5,
     "title": "Local Account Discovery (net user/localgroup)",

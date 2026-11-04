@@ -1,0 +1,24 @@
+title: Regsvr32 Remote Scriptlet (Security 4688)
+id: 7c2dafeb-8f8d-5095-a321-4bc2a2833c28
+status: test
+description: regsvr32 scrobj.dll /i:http (T1218.010); Security 4688.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1218.010
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    NewProcessName|endswith: \regsvr32.exe
+    CommandLine|contains:
+    - scrobj.dll
+    - /i:http
+    EventID: 4688
+  condition: selection
+falsepositives:
+- Nadir
+level: high
+x_test: regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll

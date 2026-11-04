@@ -1,0 +1,26 @@
+title: Mshta Script or URL Execution (Security 4688)
+id: c4cad9a3-2efa-531b-908f-e6d4d74f56dd
+status: test
+description: mshta vbscript/javascript/URL (T1218.005); Security 4688.
+author: Eldaniz Omarov
+date: 2026/11/04
+tags:
+- attack.defense_evasion
+- attack.t1218.005
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    NewProcessName|endswith: \mshta.exe
+    CommandLine|contains:
+    - 'vbscript:'
+    - 'javascript:'
+    - http://
+    - https://
+    EventID: 4688
+  condition: selection
+falsepositives:
+- Nadir
+level: high
+x_test: mshta.exe vbscript:Close(Execute("x=1"))

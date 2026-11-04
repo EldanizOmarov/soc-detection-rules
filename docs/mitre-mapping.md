@@ -2,6 +2,10 @@
 
 | SIEM | Qayda | Səviyyə | Texnikalar | Test əmri |
 |---|---|---|---|---|
+| Wazuh | Certutil URL Download (Security 4688) | 11 | T1105 | `certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\soc.txt` |
+| Wazuh | Credential Dumping Command Keywords (Security 4688) | 13 | T1003 | `cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)` |
+| Wazuh | Mshta Script or URL Execution (Security 4688) | 11 | T1218.005 | `mshta.exe vbscript:Close(Execute("x=1"))` |
+| Wazuh | Regsvr32 Remote Scriptlet (Security 4688) | 11 | T1218.010 | `regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll` |
 | Wazuh | Local Account Discovery (net user/localgroup) | 5 | T1087.001 | `net user ; net localgroup administrators` |
 | Wazuh | Member Added to Local Administrators (4732) | 13 | T1098 | `net localgroup Administrators soclabtest /add` |
 | Wazuh | Bitsadmin Transfer Job | 8 | T1197 | `bitsadmin /transfer soclab /download /priority low http://127.0.0.1:9/x %TEMP%\x.tmp` |
@@ -33,6 +37,10 @@
 | Elastic | Web Vulnerability Scanner User-Agent | medium | T1595.002 | `python3 deploy/gen_logs.py web-scanner` |
 | Elastic | Web SQL Injection Attempt | high | T1190 | `python3 deploy/gen_logs.py web-sqli` |
 | Elastic | Web XSS Attempt | medium | T1190 | `python3 deploy/gen_logs.py web-xss` |
+| Elastic | Certutil URL Download (Security 4688) | high | T1105 | `certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\soc.txt` |
+| Elastic | Credential Dumping Command Keywords (Security 4688) | critical | T1003 | `cmd.exe /c echo sekurlsa::logonpasswords   (yalniz echo)` |
+| Elastic | Mshta Script or URL Execution (Security 4688) | high | T1218.005 | `mshta.exe vbscript:Close(Execute("x=1"))` |
+| Elastic | Regsvr32 Remote Scriptlet (Security 4688) | high | T1218.010 | `regsvr32 /s /n /u /i:http://127.0.0.1:9/x.sct scrobj.dll` |
 | Elastic | Certutil URL Download | high | T1105 | `certutil -urlcache -split -f http://127.0.0.1:9/soc.txt %TEMP%\soc.txt` |
 | Elastic | Suspiciously Long DNS Query (DNS Tunneling) | medium | T1071.004 | `Resolve-DnsName (("a"*40)+"."+("b"*40)+".example.com")` |
 | Elastic | Event Logs Cleared (1102/104) | high | T1070.001 | `Clear-EventLog -LogName Application (yalniz lab ucun, test edilmir)` |

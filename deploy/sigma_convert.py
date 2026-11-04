@@ -398,7 +398,9 @@ def to_elastic(rule):
 
 # --------------------------------------------------------------------------- Wazuh
 def pesc(s):
-    return re.sub(r"([\\.^$|?*+()\[\]{}])", r"\\\1", s)
+    # Wazuh eventchannel sahelerinde backslash ikiqat saxlanir (C:\\\\Users\\\\...): bir backslash -> "\\\\+"
+    esc = lambda t: re.sub(r"([.^$|?*+()\[\]{}])", r"\\\1", t)
+    return "\\\\+".join(esc(part) for part in s.split("\\"))
 
 
 def wz_regex(c):

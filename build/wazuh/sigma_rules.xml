@@ -3,7 +3,7 @@
   <!-- Certutil URL Download (Security 4688) [win4688_certutil_download.yml] -->
   <rule id="100510" level="11">
     <if_sid>67027</if_sid>
-    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\certutil\.exe$</field>
+    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\+certutil\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:-urlcache|-verifyctl|http://|https://)</field>
     <description>SIGMA: Certutil URL Download (Security 4688)</description>
     <mitre>
@@ -24,7 +24,7 @@
   <!-- Mshta Script or URL Execution (Security 4688) [win4688_mshta_script.yml] -->
   <rule id="100520" level="11">
     <if_sid>67027</if_sid>
-    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\mshta\.exe$</field>
+    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\+mshta\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:vbscript:|javascript:|http://|https://)</field>
     <description>SIGMA: Mshta Script or URL Execution (Security 4688)</description>
     <mitre>
@@ -35,7 +35,7 @@
   <!-- Regsvr32 Remote Scriptlet (Security 4688) [win4688_regsvr32_scrobj.yml] -->
   <rule id="100530" level="11">
     <if_sid>67027</if_sid>
-    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\regsvr32\.exe$</field>
+    <field name="win.eventdata.newProcessName" type="pcre2">(?i)\\+regsvr32\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:scrobj\.dll|/i:http)</field>
     <description>SIGMA: Regsvr32 Remote Scriptlet (Security 4688)</description>
     <mitre>
@@ -46,7 +46,7 @@
   <!-- Local Account Discovery (net user/localgroup) [win_account_discovery_net.yml] -->
   <rule id="100430" level="5">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\net\.exe$|\\net1\.exe$)</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\+net\.exe$|\\+net1\.exe$)</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: user| localgroup| accounts)</field>
     <description>SIGMA: Local Account Discovery (net user/localgroup)</description>
     <mitre>
@@ -67,7 +67,7 @@
   <!-- Bitsadmin Transfer Job [win_bitsadmin_transfer.yml] -->
   <rule id="100320" level="8">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\bitsadmin\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+bitsadmin\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:/transfer|/addfile)</field>
     <description>SIGMA: Bitsadmin Transfer Job</description>
     <mitre>
@@ -78,7 +78,7 @@
   <!-- Certutil URL Download [win_certutil_download.yml] -->
   <rule id="100310" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\certutil\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+certutil\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:-urlcache|-verifyctl|http://|https://)</field>
     <description>SIGMA: Certutil URL Download</description>
     <mitre>
@@ -100,7 +100,7 @@
   <!-- Executable Dropped in User Temp [win_exe_created_in_temp.yml] -->
   <rule id="100500" level="5">
     <if_sid>61613,92213</if_sid>
-    <field name="win.eventdata.targetFilename" type="pcre2">(?i)\\AppData\\Local\\Temp\\</field>
+    <field name="win.eventdata.targetFilename" type="pcre2">(?i)\\+AppData\\+Local\\+Temp\\+</field>
     <field name="win.eventdata.targetFilename" type="pcre2">(?i)(?:\.exe$|\.dll$|\.scr$)</field>
     <description>SIGMA: Executable Dropped in User Temp</description>
     <mitre>
@@ -142,7 +142,7 @@
   <!-- Mshta Script or URL Execution [win_mshta_script.yml] -->
   <rule id="100330" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\mshta\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+mshta\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:vbscript:|javascript:|http://|https://)</field>
     <description>SIGMA: Mshta Script or URL Execution</description>
     <mitre>
@@ -163,7 +163,7 @@
   <!-- PowerShell Download Cradle [win_powershell_download_cradle.yml] -->
   <rule id="100480" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\powershell\.exe$|\\pwsh\.exe$)</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\+powershell\.exe$|\\+pwsh\.exe$)</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:DownloadString|DownloadFile|Net\.WebClient|Invoke-WebRequest|Invoke-RestMethod)</field>
     <description>SIGMA: PowerShell Download Cradle</description>
     <mitre>
@@ -175,7 +175,7 @@
   <!-- PowerShell Encoded Command [win_powershell_encoded_command.yml] -->
   <rule id="100300" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\powershell\.exe$|\\pwsh\.exe$)</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\+powershell\.exe$|\\+pwsh\.exe$)</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: -enc | -encodedcommand | -ec )</field>
     <description>SIGMA: PowerShell Encoded Command</description>
     <mitre>
@@ -187,7 +187,7 @@
   <!-- System Owner / Information Discovery [win_recon_whoami_systeminfo.yml] -->
   <rule id="100440" level="5">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\whoami\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+whoami\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:/priv|/all|/groups)</field>
     <description>SIGMA: System Owner / Information Discovery</description>
     <mitre>
@@ -198,7 +198,7 @@
   </rule>
   <rule id="100441" level="5">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\systeminfo\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+systeminfo\.exe$</field>
     <description>SIGMA: System Owner / Information Discovery</description>
     <mitre>
       <id>T1033</id>
@@ -218,7 +218,7 @@
   </rule>
   <rule id="100411" level="11">
     <if_sid>61615,92302</if_sid>
-    <field name="win.eventdata.targetObject" type="pcre2">(?i)\\CurrentVersion\\Run</field>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)\\+CurrentVersion\\+Run</field>
     <description>SIGMA: Registry Run Key Persistence</description>
     <mitre>
       <id>T1547.001</id>
@@ -228,7 +228,7 @@
   <!-- Regsvr32 Remote Scriptlet (Squiblydoo) [win_regsvr32_scrobj.yml] -->
   <rule id="100340" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\regsvr32\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+regsvr32\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:scrobj\.dll|/i:http)</field>
     <description>SIGMA: Regsvr32 Remote Scriptlet (Squiblydoo)</description>
     <mitre>
@@ -239,7 +239,7 @@
   <!-- Scheduled Task Creation (schtasks) [win_schtasks_create.yml] -->
   <rule id="100390" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\schtasks\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+schtasks\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i) /create </field>
     <description>SIGMA: Scheduled Task Creation (schtasks)</description>
     <mitre>
@@ -250,7 +250,7 @@
   <!-- Service Creation (sc.exe) [win_service_create_sc.yml] -->
   <rule id="100400" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\sc\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+sc\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i) create </field>
     <description>SIGMA: Service Creation (sc.exe)</description>
     <mitre>
@@ -261,7 +261,7 @@
   <!-- Shadow Copy Deletion (vssadmin) [win_vssadmin_delete_shadows.yml] -->
   <rule id="100350" level="13">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\vssadmin\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+vssadmin\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:delete shadows|resize shadowstorage)</field>
     <description>SIGMA: Shadow Copy Deletion (vssadmin)</description>
     <mitre>
@@ -272,7 +272,7 @@
   <!-- Windows Event Log Clearing (wevtutil) [win_wevtutil_clear_logs.yml] -->
   <rule id="100360" level="11">
     <if_sid>61603</if_sid>
-    <field name="win.eventdata.image" type="pcre2">(?i)\\wevtutil\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\+wevtutil\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?: cl | clear-log )</field>
     <description>SIGMA: Windows Event Log Clearing (wevtutil)</description>
     <mitre>
@@ -283,8 +283,8 @@
   <!-- Shell Spawned by WMI Provider Host [win_wmi_spawned_shell.yml] -->
   <rule id="100420" level="11">
     <if_sid>61603,92069,92052</if_sid>
-    <field name="win.eventdata.parentImage" type="pcre2">(?i)\\wmiprvse\.exe$</field>
-    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\cmd\.exe$|\\powershell\.exe$|\\mshta\.exe$)</field>
+    <field name="win.eventdata.parentImage" type="pcre2">(?i)\\+wmiprvse\.exe$</field>
+    <field name="win.eventdata.image" type="pcre2">(?i)(?:\\+cmd\.exe$|\\+powershell\.exe$|\\+mshta\.exe$)</field>
     <description>SIGMA: Shell Spawned by WMI Provider Host</description>
     <mitre>
       <id>T1047</id>

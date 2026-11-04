@@ -1,0 +1,99 @@
+{
+  "index_patterns": [
+    "soc-auth-*"
+  ],
+  "priority": 300,
+  "_meta": {
+    "description": "SOC dedicated index: auth (Windows auth + Linux auth.log)"
+  },
+  "template": {
+    "settings": {
+      "index.number_of_shards": 1,
+      "index.number_of_replicas": 0,
+      "index.lifecycle.name": "soc-logs-policy",
+      "index.default_pipeline": "soc-enrich",
+      "analysis": {
+        "normalizer": {
+          "soc_lower": {
+            "type": "custom",
+            "filter": [
+              "lowercase"
+            ]
+          }
+        }
+      }
+    },
+    "mappings": {
+      "dynamic_templates": [
+        {
+          "message_text": {
+            "match": "message",
+            "mapping": {
+              "type": "text"
+            }
+          }
+        },
+        {
+          "strings_as_keyword": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "keyword",
+              "ignore_above": 4096,
+              "normalizer": "soc_lower"
+            }
+          }
+        }
+      ],
+      "properties": {
+        "@timestamp": {
+          "type": "date"
+        },
+        "source": {
+          "properties": {
+            "ip": {
+              "type": "ip"
+            },
+            "geo": {
+              "properties": {
+                "location": {
+                  "type": "geo_point"
+                }
+              }
+            }
+          }
+        },
+        "destination": {
+          "properties": {
+            "ip": {
+              "type": "ip"
+            },
+            "port": {
+              "type": "integer"
+            }
+          }
+        },
+        "soc": {
+          "properties": {
+            "hour": {
+              "type": "integer"
+            },
+            "dns_len": {
+              "type": "integer"
+            }
+          }
+        },
+        "http": {
+          "properties": {
+            "response": {
+              "properties": {
+                "status_code": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

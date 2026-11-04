@@ -1,0 +1,8 @@
+{
+  "description": "SOC enrichment: ingest zamani, GeoIP, menbe etiketi",
+  "processors": [
+    { "set": { "field": "event.ingested", "value": "{{_ingest.timestamp}}" } },
+    { "geoip": { "field": "source.ip", "target_field": "source.geo", "ignore_missing": true, "ignore_failure": true } },
+    { "remove": { "field": ["agent.ephemeral_id"], "ignore_missing": true, "ignore_failure": true } }
+  ]
+}

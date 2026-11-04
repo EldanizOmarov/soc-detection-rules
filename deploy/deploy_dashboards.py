@@ -41,7 +41,7 @@ def bar_terms(title, index, field, size=10, flt=None, color=None):
 
 
 def ts_bar(title, index, split=None, flt=None, size=6, extra_agg=None):
-    inner = {"t": {"date_histogram": {"field": "@timestamp", "fixed_interval": {"%autointerval%": True}}}}
+    inner = {"t": {"date_histogram": {"field": "@timestamp", "fixed_interval": "5m"}}}
     if split:
         inner["t"]["aggs"] = {"s": {"terms": {"field": split, "size": size}}}
     d = {"url": url(index, inner, flt), "format": {"property": prefix(flt) + "t.buckets"}}
@@ -74,7 +74,7 @@ def geo_map(title, index, flt):
     aggs = {"c": {"terms": {"field": "source.geo.country_name", "size": 100}, "aggs": {"loc": {"geo_centroid": {"field": "source.geo.location"}}}}}
     return {
         "$schema": "https://vega.github.io/schema/vega/v5.json", "title": {"text": title},
-        "config": {"kibana": {"type": "map", "mapStyle": "default", "latitude": 30, "longitude": 15, "zoom": 1.5, "controlsDirection": "vertical"}},
+        "config": {"kibana": {"type": "map", "mapStyle": True, "latitude": 30, "longitude": 15, "zoom": 1.5, "controlsDirection": "vertical"}},
         "data": [{"name": "table", "url": url(index, aggs, flt), "format": {"property": "aggregations.f.c.buckets"},
                   "transform": [{"type": "geopoint", "projection": "projection", "fields": ["loc.location.lon", "loc.location.lat"], "as": ["x", "y"]}]}],
         "scales": [{"name": "r", "type": "sqrt", "domain": {"data": "table", "field": "doc_count"}, "range": [150, 4000]}],
@@ -179,7 +179,7 @@ def so_dash(title, panels):
         refs.append({"name": "panel_%d" % n, "type": "visualization", "id": vid})
         x, rowh = x + w, max(rowh, h)
     return {"attributes": {"title": title, "description": "Kod kimi: GitHub -> API. Real-time (10 san refresh).", "hits": 0,
-                           "panelsJSON": json.dumps(pj), "optionsJSON": json.dumps({"useMargins": True, "syncColors": False, "syncCursor": True, "syncTooltips": False, "hidePanelTitles": False}),
+                           "panelsJSON": json.dumps(pj), "optionsJSON": json.dumps({"useMargins": True, "syncColors": False, "syncCursor": True, "syncTooltips": False, "hidePanelTitles": True}),
                            "timeRestore": True, "timeFrom": "now-24h", "timeTo": "now", "refreshInterval": {"pause": False, "value": 10000},
                            "kibanaSavedObjectMeta": {"searchSourceJSON": json.dumps({"query": {"query": "", "language": "kuery"}, "filter": []})}},
             "references": refs}
@@ -189,6 +189,11 @@ def main():
     from deploy_elastic import kb
     V, D = build()
     os.makedirs(OUT, exist_ok=True)
+    # Kibana 8.11 data view olmadan dashboard acmir -> indekslere data view-lar
+    for dv in ("soc-endpoint", "soc-network", "soc-web", "soc-email", "soc-auth", "soc-cloud", "soc-metrics"):
+        title = dv if dv == "soc-metrics" else dv + "-*"
+        c, r = kb("POST", "/api/data_views/data_view", {"override": True, "data_view": {"id": dv, "title": title, "name": dv, "timeFieldName": "@timestamp"}})
+        print("%s data view %-14s HTTP %s" % ("OK  " if c in (200, 201) else "FAIL", title, c))
     ok = bad = 0
     for vid, (title, spec) in V.items():
         body = so_vis(vid, title, spec)

@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "Ugursuz giris",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"Ugursuz giris\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"Ugursuz giris (4625)\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\"soc-auth-*\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"f\\\": {\\n      \\\"filter\\\": {\\n       \\\"term\\\": {\\n        \\\"event.code\\\": \\\"4625\\\"\\n       }\\n      },\\n      \\\"aggs\\\": {\\n       \\\"b\\\": {\\n        \\\"terms\\\": {\\n         \\\"field\\\": \\\"_index\\\",\\n         \\\"size\\\": 50\\n        }\\n       }\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.f.b.buckets\\\"\\n  }\\n },\\n \\\"transform\\\": [\\n  {\\n   \\\"aggregate\\\": [\\n    {\\n     \\\"op\\\": \\\"sum\\\",\\n     \\\"field\\\": \\\"doc_count\\\",\\n     \\\"as\\\": \\\"n\\\"\\n    }\\n   ]\\n  }\\n ],\\n \\\"mark\\\": {\\n  \\\"type\\\": \\\"text\\\",\\n  \\\"fontSize\\\": 54,\\n  \\\"fontWeight\\\": \\\"bold\\\",\\n  \\\"color\\\": \\\"#b22222\\\"\\n },\\n \\\"encoding\\\": {\\n  \\\"text\\\": {\\n   \\\"field\\\": \\\"n\\\",\\n   \\\"type\\\": \\\"quantitative\\\",\\n   \\\"format\\\": \\\",\\\"\\n  }\\n }\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-id-fail",
+ "type": "visualization"
+}

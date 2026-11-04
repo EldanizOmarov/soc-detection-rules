@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "Top DENY IP",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"Top DENY IP\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"Top DENY menbe IP\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\"soc-network-*\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"f\\\": {\\n      \\\"filter\\\": {\\n       \\\"term\\\": {\\n        \\\"event.action\\\": \\\"deny\\\"\\n       }\\n      },\\n      \\\"aggs\\\": {\\n       \\\"b\\\": {\\n        \\\"terms\\\": {\\n         \\\"field\\\": \\\"source.ip\\\",\\n         \\\"size\\\": 10\\n        }\\n       }\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.f.b.buckets\\\"\\n  }\\n },\\n \\\"mark\\\": {\\n  \\\"type\\\": \\\"bar\\\",\\n  \\\"color\\\": \\\"#b22222\\\"\\n },\\n \\\"encoding\\\": {\\n  \\\"y\\\": {\\n   \\\"field\\\": \\\"key\\\",\\n   \\\"type\\\": \\\"nominal\\\",\\n   \\\"sort\\\": \\\"-x\\\",\\n   \\\"title\\\": null,\\n   \\\"axis\\\": {\\n    \\\"labelLimit\\\": 220\\n   }\\n  },\\n  \\\"x\\\": {\\n   \\\"field\\\": \\\"doc_count\\\",\\n   \\\"type\\\": \\\"quantitative\\\",\\n   \\\"title\\\": \\\"say\\\"\\n  },\\n  \\\"tooltip\\\": [\\n   {\\n    \\\"field\\\": \\\"key\\\",\\n    \\\"title\\\": \\\"deyer\\\"\\n   },\\n   {\\n    \\\"field\\\": \\\"doc_count\\\",\\n    \\\"title\\\": \\\"say\\\"\\n   }\\n  ]\\n }\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-nw-src",
+ "type": "visualization"
+}

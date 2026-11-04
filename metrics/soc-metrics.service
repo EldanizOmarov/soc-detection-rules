@@ -1,0 +1,13 @@
+[Unit]
+Description=SOC MTTD/MTTR metrics collector
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /root/soc-detection-rules/metrics/metrics-collector.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

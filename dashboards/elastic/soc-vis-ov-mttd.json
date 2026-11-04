@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "MTTD",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"MTTD\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"MTTD - hadise -> alert (san, SIEM uzre)\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\"soc-metrics\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"f\\\": {\\n      \\\"filter\\\": {\\n       \\\"term\\\": {\\n        \\\"metric\\\": \\\"mttd\\\"\\n       }\\n      },\\n      \\\"aggs\\\": {\\n       \\\"b\\\": {\\n        \\\"terms\\\": {\\n         \\\"field\\\": \\\"siem\\\",\\n         \\\"size\\\": 10\\n        },\\n        \\\"aggs\\\": {\\n         \\\"v\\\": {\\n          \\\"avg\\\": {\\n           \\\"field\\\": \\\"value_s\\\"\\n          }\\n         }\\n        }\\n       }\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.f.b.buckets\\\"\\n  }\\n },\\n \\\"transform\\\": [\\n  {\\n   \\\"calculate\\\": \\\"datum.v.value / 1\\\",\\n   \\\"as\\\": \\\"val\\\"\\n  }\\n ],\\n \\\"layer\\\": [\\n  {\\n   \\\"mark\\\": {\\n    \\\"type\\\": \\\"bar\\\",\\n    \\\"color\\\": \\\"#f58518\\\"\\n   },\\n   \\\"encoding\\\": {\\n    \\\"y\\\": {\\n     \\\"field\\\": \\\"key\\\",\\n     \\\"type\\\": \\\"nominal\\\",\\n     \\\"title\\\": null\\n    },\\n    \\\"x\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"title\\\": \\\"orta (san)\\\"\\n    }\\n   }\\n  },\\n  {\\n   \\\"mark\\\": {\\n    \\\"type\\\": \\\"text\\\",\\n    \\\"align\\\": \\\"left\\\",\\n    \\\"dx\\\": 4\\n   },\\n   \\\"encoding\\\": {\\n    \\\"y\\\": {\\n     \\\"field\\\": \\\"key\\\",\\n     \\\"type\\\": \\\"nominal\\\",\\n     \\\"title\\\": null\\n    },\\n    \\\"x\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"title\\\": \\\"orta (san)\\\"\\n    },\\n    \\\"text\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"format\\\": \\\".1f\\\"\\n    }\\n   }\\n  }\\n ]\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-ov-mttd",
+ "type": "visualization"
+}

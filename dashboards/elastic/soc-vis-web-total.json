@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "Web sorgulari",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"Web sorgulari\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"Web sorgulari\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\"soc-web-*\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"b\\\": {\\n      \\\"terms\\\": {\\n       \\\"field\\\": \\\"_index\\\",\\n       \\\"size\\\": 50\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.b.buckets\\\"\\n  }\\n },\\n \\\"transform\\\": [\\n  {\\n   \\\"aggregate\\\": [\\n    {\\n     \\\"op\\\": \\\"sum\\\",\\n     \\\"field\\\": \\\"doc_count\\\",\\n     \\\"as\\\": \\\"n\\\"\\n    }\\n   ]\\n  }\\n ],\\n \\\"mark\\\": {\\n  \\\"type\\\": \\\"text\\\",\\n  \\\"fontSize\\\": 54,\\n  \\\"fontWeight\\\": \\\"bold\\\",\\n  \\\"color\\\": \\\"#e45756\\\"\\n },\\n \\\"encoding\\\": {\\n  \\\"text\\\": {\\n   \\\"field\\\": \\\"n\\\",\\n   \\\"type\\\": \\\"quantitative\\\",\\n   \\\"format\\\": \\\",\\\"\\n  }\\n }\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-web-total",
+ "type": "visualization"
+}

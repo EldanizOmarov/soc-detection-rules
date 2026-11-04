@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "MTTR",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"MTTR\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"MTTR - ticket acilis -> baglanis (deq)\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\"soc-metrics\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"f\\\": {\\n      \\\"filter\\\": {\\n       \\\"bool\\\": {\\n        \\\"filter\\\": [\\n         {\\n          \\\"term\\\": {\\n           \\\"metric\\\": \\\"ticket\\\"\\n          }\\n         },\\n         {\\n          \\\"term\\\": {\\n           \\\"state\\\": \\\"closed\\\"\\n          }\\n         }\\n        ]\\n       }\\n      },\\n      \\\"aggs\\\": {\\n       \\\"b\\\": {\\n        \\\"terms\\\": {\\n         \\\"field\\\": \\\"siem\\\",\\n         \\\"size\\\": 10\\n        },\\n        \\\"aggs\\\": {\\n         \\\"v\\\": {\\n          \\\"avg\\\": {\\n           \\\"field\\\": \\\"value_s\\\"\\n          }\\n         }\\n        }\\n       }\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.f.b.buckets\\\"\\n  }\\n },\\n \\\"transform\\\": [\\n  {\\n   \\\"calculate\\\": \\\"datum.v.value / 60\\\",\\n   \\\"as\\\": \\\"val\\\"\\n  }\\n ],\\n \\\"layer\\\": [\\n  {\\n   \\\"mark\\\": {\\n    \\\"type\\\": \\\"bar\\\",\\n    \\\"color\\\": \\\"#54a24b\\\"\\n   },\\n   \\\"encoding\\\": {\\n    \\\"y\\\": {\\n     \\\"field\\\": \\\"key\\\",\\n     \\\"type\\\": \\\"nominal\\\",\\n     \\\"title\\\": null\\n    },\\n    \\\"x\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"title\\\": \\\"orta (deq)\\\"\\n    }\\n   }\\n  },\\n  {\\n   \\\"mark\\\": {\\n    \\\"type\\\": \\\"text\\\",\\n    \\\"align\\\": \\\"left\\\",\\n    \\\"dx\\\": 4\\n   },\\n   \\\"encoding\\\": {\\n    \\\"y\\\": {\\n     \\\"field\\\": \\\"key\\\",\\n     \\\"type\\\": \\\"nominal\\\",\\n     \\\"title\\\": null\\n    },\\n    \\\"x\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"title\\\": \\\"orta (deq)\\\"\\n    },\\n    \\\"text\\\": {\\n     \\\"field\\\": \\\"val\\\",\\n     \\\"type\\\": \\\"quantitative\\\",\\n     \\\"format\\\": \\\".1f\\\"\\n    }\\n   }\\n  }\\n ]\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-ov-mttr",
+ "type": "visualization"
+}

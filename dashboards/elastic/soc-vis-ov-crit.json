@@ -1,0 +1,14 @@
+{
+ "attributes": {
+  "title": "Kritik+Yuksek",
+  "description": "",
+  "version": 1,
+  "uiStateJSON": "{}",
+  "visState": "{\"title\": \"Kritik+Yuksek\", \"type\": \"vega\", \"aggs\": [], \"params\": {\"spec\": \"{\\n \\\"$schema\\\": \\\"https://vega.github.io/schema/vega-lite/v5.json\\\",\\n \\\"title\\\": {\\n  \\\"text\\\": \\\"Kritik + yuksek alert\\\",\\n  \\\"fontSize\\\": 13\\n },\\n \\\"autosize\\\": {\\n  \\\"type\\\": \\\"fit\\\",\\n  \\\"contains\\\": \\\"padding\\\"\\n },\\n \\\"data\\\": {\\n  \\\"url\\\": {\\n   \\\"%context%\\\": true,\\n   \\\"%timefield%\\\": \\\"@timestamp\\\",\\n   \\\"index\\\": \\\".alerts-security.alerts-*\\\",\\n   \\\"body\\\": {\\n    \\\"size\\\": 0,\\n    \\\"aggs\\\": {\\n     \\\"f\\\": {\\n      \\\"filter\\\": {\\n       \\\"terms\\\": {\\n        \\\"kibana.alert.severity\\\": [\\n         \\\"critical\\\",\\n         \\\"high\\\"\\n        ]\\n       }\\n      },\\n      \\\"aggs\\\": {\\n       \\\"b\\\": {\\n        \\\"terms\\\": {\\n         \\\"field\\\": \\\"_index\\\",\\n         \\\"size\\\": 50\\n        }\\n       }\\n      }\\n     }\\n    }\\n   }\\n  },\\n  \\\"format\\\": {\\n   \\\"property\\\": \\\"aggregations.f.b.buckets\\\"\\n  }\\n },\\n \\\"transform\\\": [\\n  {\\n   \\\"aggregate\\\": [\\n    {\\n     \\\"op\\\": \\\"sum\\\",\\n     \\\"field\\\": \\\"doc_count\\\",\\n     \\\"as\\\": \\\"n\\\"\\n    }\\n   ]\\n  }\\n ],\\n \\\"mark\\\": {\\n  \\\"type\\\": \\\"text\\\",\\n  \\\"fontSize\\\": 54,\\n  \\\"fontWeight\\\": \\\"bold\\\",\\n  \\\"color\\\": \\\"#b22222\\\"\\n },\\n \\\"encoding\\\": {\\n  \\\"text\\\": {\\n   \\\"field\\\": \\\"n\\\",\\n   \\\"type\\\": \\\"quantitative\\\",\\n   \\\"format\\\": \\\",\\\"\\n  }\\n }\\n}\"}}",
+  "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"query\": {\"query\": \"\", \"language\": \"kuery\"}, \"filter\": []}"
+  }
+ },
+ "id": "soc-vis-ov-crit",
+ "type": "visualization"
+}

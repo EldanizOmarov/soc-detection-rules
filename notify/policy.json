@@ -1,0 +1,12 @@
+{
+  "_comment": "Bildiris siyaseti - her iki SIEM ucun tek menbe. Wazuh: rule.level; Elastic: rule severity.",
+  "wazuh_min_levels": {"critical": 13, "high": 11, "medium": 8},
+  "channels": {
+    "critical": ["telegram", "email", "ticket"],
+    "high":     ["telegram", "ticket"],
+    "medium":   ["email"],
+    "low":      []
+  },
+  "throttle_seconds": {"telegram": 300, "email": 300, "ticket": 3600},
+  "elastic_throttle": {"telegram": "5m", "email": "15m", "ticket": "1h"}
+}

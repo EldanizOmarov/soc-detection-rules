@@ -5,6 +5,7 @@ import base64, glob, json, os, sys, urllib.error, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from soc_deploy import password, ROOT  # noqa: E402
+from notify_common import load_env, elastic_actions  # noqa: E402
 
 KB = os.environ.get("KIBANA_URL", "http://127.0.0.1:5601")
 AUTH = "Basic " + base64.b64encode(("elastic:" + password()).encode()).decode()
@@ -37,8 +38,14 @@ def main():
     kb("POST", "/api/detection_engine/index")  # alert indeksi (movcudsa xeta qaytarmir/ignore)
     files = sorted(glob.glob(os.path.join(ROOT, "build/elastic/*.json")) + glob.glob(os.path.join(ROOT, "elastic/native/*.json")))
     ok = fail = 0
+    env = load_env()
+    c_code, _ = kb("GET", "/api/actions/connector/soc-telegram")
+    notify = c_code == 200
+    print("Bildiris connector-lari: %s" % ("var -> rule actions elave olunur" if notify else "yoxdur (actions elave edilmir)"))
     for f in files:
         body = json.load(open(f, encoding="utf-8"))
+        if notify:
+            body["actions"] = elastic_actions(body, env)
         code, res = kb("POST", "/api/detection_engine/rules", body)
         action = "yaradildi"
         if code == 409:

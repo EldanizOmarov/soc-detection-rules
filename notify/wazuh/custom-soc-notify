@@ -1,0 +1,3 @@
+#!/bin/sh
+# Wazuh integratord wrapper (custom-soc-notify.py cagirir)
+exec /usr/bin/python3 "$(dirname "$0")/custom-soc-notify.py" "$@"

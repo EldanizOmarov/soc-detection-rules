@@ -77,8 +77,8 @@ def cold_stats():
             with gzip.open(f, "rt", errors="replace") as g:
                 for _ in g:
                     n += 1
-        except Exception:
-            n = -1
+        except (EOFError, OSError):
+            pass  # fayl hele Logstash terefinden yazilir - oxunan setirler sayilir
         rows.append((os.path.basename(f), os.path.getsize(f), n))
     return rows
 
